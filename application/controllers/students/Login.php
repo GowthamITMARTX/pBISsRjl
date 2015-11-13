@@ -3,6 +3,10 @@
 class Login extends CI_Controller{
 	function __construct(){
         parent::__construct();
+        if($this->session->userdata('user')){
+            redirect(base_url('students/profile'));
+            exit();
+        }
         $this->load->model('student/Student_model','student');
 	  }
 	
