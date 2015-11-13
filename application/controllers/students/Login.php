@@ -22,17 +22,17 @@ class Login extends CI_Controller{
             }
         }
         else{
-            $d['error']= "Incorrect Username or Password";
-            $this->load->view('student/login', $d);
-        }
+            $d['error']= true;
+         }
       }
       else{
-        $d['error'] = "Please enter valid email";
-        $this->load->view('student/login', $d);
+        $d['error'] = true;
       } 
+      }
+       else{
+       $this->session->sess_destroy();      
         }
-      
-		$this->load->view('student/login', $d);
+        $this->load->view('student/login', $d);
 	}
 	
 }

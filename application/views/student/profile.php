@@ -22,7 +22,7 @@
               <h3 class="panel-title" style="text-align: center;"><b>User Profile</b></h3>
             </div>
             <div class="panel-body">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://www.kiu.edu.pk/img/profile-default.gif" class="img-circle img-responsive"> </div>
                <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information">
                     <tbody>
@@ -164,7 +164,7 @@
 
                                     todo_events = [
                                    <?php foreach($tot_remark as $r): ?>
-                                        { date: '<?= $r->date;  ?>', title: '<?=$r->title; ?>', url: '<?=current_url().'/'.$r->id;?>',  },
+                                        { date: '<?= $r->date;  ?>', title: '<?=$r->title; ?>', url: '<?=current_url().'/';?>',  },
                                    <?php endforeach; ?>       
                                             ]
                                 </script>
@@ -176,7 +176,7 @@
                                     <div class="days-container">
                                         <div class="days">
                                             <div class="headers">
-                                                <% _.each(daysOfTheWeek, function(day) { %><div class="day-header"><%= day %></div><% }); %>
+                                               <% _.each(daysOfTheWeek, function(day) { %><div class="day-header"><%= day %></div><% }); %>
                                             </div>
                                             <% _.each(days, function(day) { %><div class="<%= day.classes %>" id="<%= day.id %>"><%= day.day %></div><% }); %>
                                         </div>

@@ -30,7 +30,7 @@
             display: block;
             position: absolute;
             z-index: 11;
-            background: url(assets/img/psswrd_shwhide_icon.png) no-repeat;
+            background: url(http://localhost/rica/trunk/assets/img/psswrd_shwhide_icon.png) no-repeat;
             width: 18px;
             height: 12px;
             left: 212px !important;

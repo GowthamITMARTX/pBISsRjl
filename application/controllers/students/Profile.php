@@ -17,6 +17,7 @@ class Profile extends CI_Controller {
 		}
 		else{
 			redirect(base_url('students/login'));
+            exit();
 		}
 		
 	}
