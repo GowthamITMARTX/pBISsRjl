@@ -92,6 +92,8 @@
                                 <td><a href="/index.php?r=user/recovery">Lost Password?</a>
 
                                     <div class="student_reg">
+									<a href="<?=base_url('students/login'); ?>">Student
+                                            Login</a> <br/>
                                         <a href="/index.php?r=onlineadmission/registration/index">Student
                                             Registration</a> <br/></div>
                                 </td>
