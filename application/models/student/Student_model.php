@@ -17,7 +17,7 @@ class Student_model extends MY_Model{
 	}
 	
 	function getTimeTable($id){
-		$q = "select timetable.*, class.title as cls_name from timetable, class where timetable.cls_id in(select cls_id from student_cls_pool where std_id  = ?) and timetable.cls_id = class.c_id";
+		$q = "select concat(timetable.title, '- ' ,class.title) as title, timetable.start, timetable.end from timetable, class where timetable.cls_id in(select cls_id from student_cls_pool where std_id  = ?) and timetable.cls_id = class.c_id";
 		if($q = $this->db->query($q, array($id))){
 		
 		if($q->num_rows() > 0){

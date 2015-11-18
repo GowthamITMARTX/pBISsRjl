@@ -1,4 +1,4 @@
-<nav id="side_nav">
+    <nav id="side_nav">
     <ul>
         <li>
             <a href="<?= base_url() ?>"><span class="ion-speedometer"></span> <span
