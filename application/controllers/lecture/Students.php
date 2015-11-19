@@ -36,7 +36,7 @@ class Students extends My_Controller{
             );
             
            $result = $this->lecture->send_remark($data);
-           $d['success'] = "Your remark successfully  submitted";   
+           $d['success'] = "Your remark has been submitted successfully";   
             }
             elseif($this->input->post('send') == 'all'){
              $data = array(
@@ -51,7 +51,7 @@ class Students extends My_Controller{
             'time' => $this->input->post('rtime')
             );
            $result = $this->lecture->send_remark($data);
-           $d['success'] = "Your remark successfully  submitted"; 
+           $d['success'] = "Your remark has been submitted successfully"; 
             }
         
          }
