@@ -32,6 +32,7 @@ class Student_model extends MY_Model{
 					   ->join('lecture', "remark.lec_id = lecture.id")
 					   ->join('class', "remark.cls_id = class.id")
 					   ->where('remark.std_id', $id)
+                       ->or_where('remark.std_id', 0)
                        ->where('remark.date', date('Y-m-d'))
 					   ->get()
 					   ->result();
@@ -43,6 +44,7 @@ class Student_model extends MY_Model{
                         ->join('lecture', "remark.lec_id = lecture.id")
                         ->join('class', "remark.cls_id = class.id")
                         ->where('remark.std_id', $id)
+                        ->or_where('remark.std_id', 0)
                         ->get()
                         ->result();
     }
