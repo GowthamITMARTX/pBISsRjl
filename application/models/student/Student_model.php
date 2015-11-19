@@ -27,22 +27,23 @@ class Student_model extends MY_Model{
 	}
 	
 	function getTodayRemark($id){
-	   return $this->db->select("remark.* , lecture.title as lec_t , lecture.name as lec_n, class.title as cls_t")
-	                   ->from('remark')
-					   ->join('lecture', "remark.lec_id = lecture.id")
-					   ->join('class', "remark.cls_id = class.id")
-					   ->where_in('remark.std_id', array($id,0))
+	   
+       return $this->db->select("remark.* , lecture.title as lec_t , lecture.name as lec_n, class.title as cls_t")
+                       ->from('remark')
+                       ->join('lecture', "remark.lec_id = lecture.id")
+                       ->join('class', "remark.cls_id = class.id")
+                       ->where('(remark.std_id = '.$id.' OR (remark.std_id = 0 AND remark.cls_id = 1 AND remark.sub_id = 1))')
                        ->where('remark.date', date('Y-m-d'))
-					   ->get()
-					   ->result();
-	}
+                       ->get()
+                       ->result();
+     }
     
     function getAllRemark($id){
         return $this->db->select("remark.* , lecture.title as lec_t , lecture.name as lec_n, class.title as cls_t")
                         ->from('remark')
                         ->join('lecture', "remark.lec_id = lecture.id")
                         ->join('class', "remark.cls_id = class.id")
-                        ->where_in('remark.std_id', array($id,0))
+                        ->where('(remark.std_id = '.$id.' OR (remark.std_id = 0 AND remark.cls_id = 1 AND remark.sub_id = 1))')
                         ->get()
                         ->result();
     }
