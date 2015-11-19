@@ -54,7 +54,7 @@
              <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">STUDENTS <span id="btn_id"> </span></div>
+                                <div class="panel-heading" >STUDENTS <span id="send_all"><span id="btn_id"> </span> </span></div>
                                 <div class="panel-body">
                                     <table id="dt_basic" class=" table table-striped table-bordered ">
                                        <thead>
@@ -121,6 +121,7 @@
         </div>
     </div>
     <input type="hidden" name="cls_id" value="" id="cls" />
+    <input type="hidden" name="sub_id" value="" id="sid" />
     <input type="hidden" name="stid" value="" id="std" />
     <input type="hidden" name="send" value="" id="send" />
     
@@ -164,9 +165,14 @@
           $('#subject').change(function() {
               var sid = $(this).val();
              $.get("<?=base_url() ?>lecture/students/all", {cid : cid, sid: sid}, function(data){
-              $('#xtbody').html(data); 
-              $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()">Send Remark to All Students</button>');
-              $('#cls').attr('value', cid); 
+              $('#xtbody').html(data);
+              $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()" >Send Remark to All Students</button>');
+              if($('#xtbody').html() == ""){
+               $('#btn_id').remove() == "";
+               $('#send_all').html('<span id="btn_id"> </span>');
+              } 
+             $('#cls').attr('value', cid); 
+             $('#sid').attr('value', sid);
              }
              );
           });
