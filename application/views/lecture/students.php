@@ -25,11 +25,6 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <?php if(isset($success)):  ?>
-                                             <div class="alert alert-success" role="alert"> <strong><?=$success; ?></strong></div>
-                                          <?php elseif(isset($error)): ?>
-                                              <div class="alert alert-danger" role="alert"> <strong>*<?=$error; ?></strong></div>
-                                          <?php endif; ?>
                                         <div class="form-group row sepH_b ">
                                             <div class="col-sm-4">
                                                 <select class="form-control" id="std_cls">
@@ -59,8 +54,8 @@
              <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading" >STUDENTS <span id="send_all"><span id="btn_id"> </span> </span></div>
-                                <div class="panel-body">
+                                <div class="panel-heading">STUDENTS <span id="btn_id"> </span></div>
+                                <div class="panel-body" id="data_table" >
                                     <table id="dt_basic" class=" table table-striped table-bordered ">
                                        <thead>
                                             <tr>
@@ -81,6 +76,13 @@
                             </div>
                         </div>
                        </div>
+                  <div class="row">
+                  <?php if(isset($success)):  ?>
+                     <span style="color: green"> <?=$success; ?></span>
+                  <?php elseif(isset($error)): ?>
+                      <span style="color: red"> *<?=$error; ?></span>
+                  <?php endif; ?>
+                  </div>
         </div>
     </div>
     
@@ -119,7 +121,6 @@
         </div>
     </div>
     <input type="hidden" name="cls_id" value="" id="cls" />
-    <input type="hidden" name="sub_id" value="" id="sid" />
     <input type="hidden" name="stid" value="" id="std" />
     <input type="hidden" name="send" value="" id="send" />
     
@@ -163,14 +164,10 @@
           $('#subject').change(function() {
               var sid = $(this).val();
              $.get("<?=base_url() ?>lecture/students/all", {cid : cid, sid: sid}, function(data){
-              $('#xtbody').html(data);
-              $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()" >Send Remark to All Students</button>');
-              if($('#xtbody').html() == ""){
-               $('#btn_id').remove() == "";
-               $('#send_all').html('<span id="btn_id"> </span>');
-              } 
-             $('#cls').attr('value', cid); 
-             $('#sid').attr('value', sid);
+                     $('#data_table').html(data);
+                     $('body').find('#dt_basic').dataTable();
+              $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()">Send Remark to All Students</button>');
+              $('#cls').attr('value', cid); 
              }
              );
           });

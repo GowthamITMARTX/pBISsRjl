@@ -28,7 +28,6 @@ class Students extends My_Controller{
             'lec_id' => $lecture['id'],
             'std_id' => $this->input->post('stid'),
             'cls_id' => $this->input->post('cls_id'),
-            'sub_id' => $this->input->post('sub_id'),
             'title' => $this->input->post('title'),
             'description' => $this->input->post('msg'),
             'date' => $date,
@@ -36,7 +35,7 @@ class Students extends My_Controller{
             );
             
            $result = $this->lecture->send_remark($data);
-           $d['success'] = "Your remark has been submitted successfully";   
+           $d['success'] = "Your remark successfully  submitted";   
             }
             elseif($this->input->post('send') == 'all'){
              $data = array(
@@ -44,14 +43,17 @@ class Students extends My_Controller{
             'lec_id' => $lecture['id'],
             'std_id' => 0,
             'cls_id' => $this->input->post('cls_id'),
-            'sub_id' => $this->input->post('sub_id'),
             'title' => $this->input->post('title'),
             'description' => $this->input->post('msg'),
             'date' => $date,
             'time' => $this->input->post('rtime')
             );
-           $result = $this->lecture->send_remark($data);
-           $d['success'] = "Your remark has been submitted successfully"; 
+                if( $this->lecture->send_remark($data)){
+                    $this->session->set_flashdata('valid', 'Record Inserted Successfully');
+                }else{
+                    $this->session->set_flashdata('error', 'Record Insert Failure !!!');
+                }
+
             }
         
          }
@@ -77,6 +79,16 @@ class Students extends My_Controller{
           $cid = $this->input->get('cid');
           $sid = $this->input->get('sid');
           $result = $this->lecture->getStudent($cid, $sid);
+           echo ' <table id="dt_basic" class=" table table-striped table-bordered ">
+                                       <thead>
+                                            <tr>
+                                                <th width="10%">#</th>
+                                                <th width="20%">Index No</th>
+                                                <th width="30%">Name</th>
+                                                <th width="30%">Email</th>
+                                                <th width="10%">Remark</th>
+                                            </tr>
+                                        </thead>';
           foreach($result as $k=> $r){
               echo "<tr>";
               echo "<td>".($k+1)."</td>";
@@ -86,6 +98,7 @@ class Students extends My_Controller{
               echo '<td> <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"  onClick=sid('.$r->id.');>Remark</button> </td>';  //<button class='btn btn-primary btn-sm' onClick='show($r->id)' >Remark</button>
               echo "</tr>";
           }
+           echo '<table>';
        }
     }
   

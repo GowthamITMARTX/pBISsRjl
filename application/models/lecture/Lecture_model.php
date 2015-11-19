@@ -38,9 +38,24 @@ class Lecture_model extends MY_Model{
            return $query->result();
        }
    }
+
+
    function send_remark($data){
       if($this->db->insert('remark', $data)){
           return true;
       }
    }
+
+    function create_assignment($data){
+        return $this->db->insert('assignment', $data) ? true : false ;
+    }
+
+    function getAssignments($cls_id , $sub_id,$lec_id){
+        return $this->db->from('assignment')
+            ->where('cls_id',$cls_id)
+            ->where('sub_id',$sub_id)
+            ->where('lec_id',$lec_id)
+            ->get()->result();
+   }
+
 }

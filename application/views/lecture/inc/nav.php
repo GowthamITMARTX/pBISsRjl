@@ -17,6 +17,12 @@
                     <span class="nav_title">Student</span>
                 </a>
            </li>
+            <li>
+                <a href="<?=base_url();?>lecture/assignment">
+                    <span class="ion-android-folder"></span>
+                    <span class="nav_title">Assignment</span>
+                </a>
+            </li>
             <!-- STUDENT CODE ENDING -->
         <?php endif; ?>
  </ul>
