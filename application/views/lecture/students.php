@@ -187,8 +187,6 @@ function send_all(){
  $('#send').attr('value', 'all');
 }
 
-
-
 $('#datetimepicker1').datepicker();
 $('#tp-default').timepicker(); 
 </script>
