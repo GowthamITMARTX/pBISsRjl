@@ -13,7 +13,8 @@ class Profile extends CI_Controller {
 		$d['remark'] = $remark;
         $tot_remark = $this->student->getAllRemark($id);
         $d['tot_remark'] = $tot_remark;
-		$this->load->view('student/profile', $d);	
+        echo $this->db->last_query();
+	    $this->load->view('student/profile', $d);	
 		}
 		else{
 			redirect(base_url('students/login'));
