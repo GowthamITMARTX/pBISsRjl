@@ -25,6 +25,11 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        <?php if(isset($success)):  ?>
+                                             <div class="alert alert-success" role="alert"> <strong><?=$success; ?></strong></div>
+                                          <?php elseif(isset($error)): ?>
+                                              <div class="alert alert-danger" role="alert"> <strong>*<?=$error; ?></strong></div>
+                                          <?php endif; ?>
                                         <div class="form-group row sepH_b ">
                                             <div class="col-sm-4">
                                                 <select class="form-control" id="std_cls">
@@ -76,13 +81,6 @@
                             </div>
                         </div>
                        </div>
-                  <div class="row">
-                  <?php if(isset($success)):  ?>
-                     <span style="color: green"> <?=$success; ?></span>
-                  <?php elseif(isset($error)): ?>
-                      <span style="color: red"> *<?=$error; ?></span>
-                  <?php endif; ?>
-                  </div>
         </div>
     </div>
     
