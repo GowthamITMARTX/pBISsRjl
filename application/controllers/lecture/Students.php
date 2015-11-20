@@ -94,10 +94,10 @@ class Students extends My_Controller{
               echo "<tr>";
               echo "<td>".($k+1)."</td>";
               echo "<td>".$r->index."</td>"; 
-              echo "<td><a href='".base_url('lecture/student/remarks').'/'.$r->id."'>".$r->title.$r->name."</a></td>";
+              echo "<td><a href='#!' onClick='v_rmk(".$r->id.");'>".$r->title.$r->name."</a></td>";
               echo "<td>".$r->email."</td>";
               echo '<td> <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"  onClick=sid('.$r->id.');>Remark</button> 
-              <button type="button" class="btn btn-info btn-sm" id="v_rmk" onClick="v_rmk('.$r->id.');" style="float :right"> View Remark</button> </td>';
+              <button type="button" class="btn btn-info btn-sm" id="v_rmk" onClick="v_rmk('.$r->id.');" style="float :right"> View Remarks</button> </td>';
               echo "</tr>";
           }
        echo ' </tbody>
