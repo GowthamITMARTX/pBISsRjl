@@ -1,8 +1,9 @@
 <?php 
 
-class Login extends CI_Controller {
+class Login extends MY_Controller {
     function __construct(){
         parent::__construct();
+
          if($this->session->userdata('lecture')){
             redirect(base_url('lecture/profile'));
             exit();

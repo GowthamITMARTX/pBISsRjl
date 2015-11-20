@@ -47,7 +47,10 @@ class Lecture_model extends MY_Model{
    }
 
     function create_assignment($data){
-        return $this->db->insert('assignment', $data) ? true : false ;
+        if(empty($data['id']))
+         return $this->db->insert('assignment', $data) ? true : false ;
+        else
+            return $this->db->update('assignment', $data , "id = ".$data['id']) ? true : false ;
     }
 
     function getAssignments($cls_id , $sub_id,$lec_id){
@@ -55,10 +58,10 @@ class Lecture_model extends MY_Model{
             ->where('cls_id',$cls_id)
             ->where('sub_id',$sub_id)
             ->where('lec_id',$lec_id)
+            ->where('status',1)
             ->get()->result();
    }
-    
-   function getStudentRemarks($cls_id,$sub_id,$std_id, $lec_id){
+  function getStudentRemarks($cls_id,$sub_id,$std_id, $lec_id){
     return $this->db->select('remark.title as title, remark.description, remark.date, remark.time ')
               ->from('remark')
               ->where('cls_id', $cls_id)
@@ -80,6 +83,8 @@ class Lecture_model extends MY_Model{
                        ->get('remark')
                        ->result();
    }
-   
 
+    function delete_assignment(){
+        $this->db->update('assignment' , array('status'=> 0 )  ,'id='.$this->input->get('a_id') );
+    }
 }
