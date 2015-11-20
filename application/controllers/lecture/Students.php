@@ -28,6 +28,7 @@ class Students extends My_Controller{
             'lec_id' => $lecture['id'],
             'std_id' => $this->input->post('stid'),
             'cls_id' => $this->input->post('cls_id'),
+            'sub_id' => $this->input->post('sub_id'),
             'title' => $this->input->post('title'),
             'description' => $this->input->post('msg'),
             'date' => $date,
@@ -35,7 +36,7 @@ class Students extends My_Controller{
             );
             
            $result = $this->lecture->send_remark($data);
-           $d['success'] = "Your remark successfully  submitted";   
+           $d['success'] = "Your remark has been submitted successfully";   
             }
             elseif($this->input->post('send') == 'all'){
              $data = array(
@@ -43,17 +44,14 @@ class Students extends My_Controller{
             'lec_id' => $lecture['id'],
             'std_id' => 0,
             'cls_id' => $this->input->post('cls_id'),
+            'sub_id' => $this->input->post('sub_id'),
             'title' => $this->input->post('title'),
             'description' => $this->input->post('msg'),
             'date' => $date,
             'time' => $this->input->post('rtime')
             );
-                if( $this->lecture->send_remark($data)){
-                    $this->session->set_flashdata('valid', 'Record Inserted Successfully');
-                }else{
-                    $this->session->set_flashdata('error', 'Record Insert Failure !!!');
-                }
-
+           $result = $this->lecture->send_remark($data);
+           $d['success'] = "Your remark has been submitted successfully"; 
             }
         
          }
@@ -79,27 +77,85 @@ class Students extends My_Controller{
           $cid = $this->input->get('cid');
           $sid = $this->input->get('sid');
           $result = $this->lecture->getStudent($cid, $sid);
-           echo ' <table id="dt_basic" class=" table table-striped table-bordered ">
+          echo '<table id="dt_basic" class=" table table-striped table-bordered ">
                                        <thead>
                                             <tr>
-                                                <th width="10%">#</th>
+                                                <th width="5%">#</th>
                                                 <th width="20%">Index No</th>
-                                                <th width="30%">Name</th>
+                                                <th width="25%">Name</th>
                                                 <th width="30%">Email</th>
-                                                <th width="10%">Remark</th>
+                                                <th width="20%" >Remark</th>
                                             </tr>
-                                        </thead>';
+                                        </thead>
+                                        <tbody id="tbl_data">';
+                                          
+                                       
           foreach($result as $k=> $r){
               echo "<tr>";
               echo "<td>".($k+1)."</td>";
               echo "<td>".$r->index."</td>"; 
-              echo "<td>".$r->title.$r->name."</td>";
+              echo "<td><a href='".base_url('lecture/student/remarks').'/'.$r->id."'>".$r->title.$r->name."</a></td>";
               echo "<td>".$r->email."</td>";
-              echo '<td> <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"  onClick=sid('.$r->id.');>Remark</button> </td>';  //<button class='btn btn-primary btn-sm' onClick='show($r->id)' >Remark</button>
+              echo '<td> <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"  onClick=sid('.$r->id.');>Remark</button> 
+              <button type="button" class="btn btn-info btn-sm" id="v_rmk" onClick="v_rmk('.$r->id.');" style="float :right"> View Remark</button> </td>';
               echo "</tr>";
           }
-           echo '<table>';
+       echo ' </tbody>
+       </table>';
        }
     }
   
+  function remarks($id){
+      if($this->input->get('std_id') && $this->input->get('cls_id') && $this->input->get('sub_id')){
+        $std_id = $this->input->get('std_id');
+        $cls_id = $this->input->get('cls_id');
+        $sub_id = $this->input->get('sub_id');
+        $lecture = $this->session->userdata('lecture');
+        $lec_id = $lecture['id'];
+       
+       $d['student'] = $this->lecture->getStById($std_id);
+       $d['record'] = $this->lecture->getStudentRemarks($cls_id,$sub_id,$std_id, $lec_id);
+       $this->load->view('lecture/remarks', $d);
+      }
+  }
+  
+  function cls_remarks(){
+      if($this->input->get('cls_id') && $this->input->get('sub_id')){
+          $cls_id = $this->input->get('cls_id');
+          $sub_id = $this->input->get('sub_id');
+          $lecture = $this->session->userdata('lecture');
+          $lec_id = $lecture['id'];
+          
+          $result = $this->lecture->getClsRemarks($cls_id, $sub_id, $lec_id);
+          
+          echo '<table id="rmk_tbl" class=" table table-striped table-bordered ">
+                                       <thead>
+                                            <tr>
+                                                <th width="10%">#</th>
+                                                <th width="20%">Title</th>
+                                                <th width="40%" >Description</th>
+                                                <th width="15%"> Date </th>
+                                                <th width="15%"> Time </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="rmk_bdy">';
+                            foreach($result as $k=> $r){
+                               echo "<tr>";
+                                echo "<td>".($k+1)."</td>"; 
+                                echo "<td>".$r->title."</td>";
+                                echo "<td>".$r->description."</td>";
+                                echo "<td>".$r->date."</td>";
+                                echo "<td>".$r->time."</td>";
+                               echo "</tr>";
+                            }
+                                          
+                       echo '</tbody>
+                                    </table>';
+          
+          
+      }
+  }
+  
 }
+
+

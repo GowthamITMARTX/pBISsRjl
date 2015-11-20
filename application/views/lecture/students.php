@@ -23,6 +23,11 @@
                      </div>
                    <div class="panel panel-default">
                             <div class="panel-body">
+                            <?php if(isset($success)):  ?>
+                      <div class="alert alert-success" role="alert"><strong> <?=$success; ?></strong></div>
+                    <?php elseif(isset($error)): ?>
+                        <div class="alert alert-danger" role="alert"><strong> *<?=$error; ?></strong></div>
+                       <?php endif; ?>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group row sepH_b ">
@@ -54,19 +59,19 @@
              <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">STUDENTS <span id="btn_id"> </span></div>
+                                <div class="panel-heading" >STUDENTS <span id="all_rmk"><span id="btn_id"></span> </span></div>
                                 <div class="panel-body" id="data_table" >
                                     <table id="dt_basic" class=" table table-striped table-bordered ">
                                        <thead>
                                             <tr>
                                                 <th width="10%">#</th>
                                                 <th width="20%">Index No</th>
-                                                <th width="30%">Name</th>
+                                                <th width="25%">Name</th>
                                                 <th width="30%">Email</th>
-                                                <th width="10%">Remark</th>
+                                                <th width="15%" >Remark</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="xtbody">
+                                        <tbody id="tbl_data">
                                           
                                         </tbody>
                                         
@@ -76,14 +81,33 @@
                             </div>
                         </div>
                        </div>
-                  <div class="row">
-                  <?php if(isset($success)):  ?>
-                     <span style="color: green"> <?=$success; ?></span>
-                  <?php elseif(isset($error)): ?>
-                      <span style="color: red"> *<?=$error; ?></span>
-                  <?php endif; ?>
-                  </div>
-        </div>
+                      
+                       <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" >ALL REMARKS</div>
+                                <div class="panel-body" id="rmk_data">
+                                    <table id='rmk_tbl' class=" table table-striped table-bordered ">
+                                       <thead>
+                                            <tr>
+                                                <th width="10%">#</th>
+                                                <th width="20%">Title</th>
+                                                <th width="40%" >Description</th>
+                                                <th width="15%"> Date </th>
+                                                <th width="15%"> Time </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id='rmk_bdy'>
+                                          
+                                        </tbody>
+                                        
+                                    </table>
+                                
+                                </div>
+                            </div>
+                        </div>
+                       </div>
+            </div>
     </div>
     
   <!-- Modal -->
@@ -121,6 +145,7 @@
         </div>
     </div>
     <input type="hidden" name="cls_id" value="" id="cls" />
+    <input type="hidden" name="sub_id" value="" id="sub_id" />
     <input type="hidden" name="stid" value="" id="std" />
     <input type="hidden" name="send" value="" id="send" />
     
@@ -134,9 +159,8 @@
 
   </div>
 </div>
-
-    <!-- side navigation -->
-    <?php $this->load->view('lecture/inc/nav') ?>
+   <!-- side navigation -->
+  <?php $this->load->view('lecture/inc/nav') ?>
 </div>
 <?php $this->load->view('inc/foot') ?>
 <!-- datatables -->
@@ -152,7 +176,6 @@
 <script>
 
  // load subjects.
-
  
  $('#std_cls').change(function() {
     var cid = $(this).val();
@@ -163,17 +186,31 @@
           $('#subject').html(data);
           $('#subject').change(function() {
               var sid = $(this).val();
+              //get student table information
              $.get("<?=base_url() ?>lecture/students/all", {cid : cid, sid: sid}, function(data){
                      $('#data_table').html(data);
                      $('body').find('#dt_basic').dataTable();
-              $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()">Send Remark to All Students</button>');
+                     // remove send remark to all student button while table haven't any student details
+                    $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()">Send Remark to All Students</button>');
+                   if($('#v_rmk').length == false){
+                        $('#btn_id').remove();
+                        $('#all_rmk').html('<span id="btn_id"></span>');
+                   }
+              
               $('#cls').attr('value', cid); 
-             }
-             );
-          });
+              $('#sub_id').attr('value', sid); 
+              
+             });
+             
+             $.get("<?=base_url() ?>lecture/students/cls_remarks", {cls_id : cid, sub_id: sid}, function(data){
+                   $('#rmk_data').html(data);
+                   $('body').find('#rmk_tbl').dataTable();
+              
+             });
+             
         });
-    }
-    else{
+    });
+    }else{
         $('#subject').attr('disabled', 'disabled');
     }
  });
@@ -186,6 +223,13 @@ function sid(id){
 function send_all(){
  $('#send').attr('value', 'all');
 }
+
+function v_rmk(std_id){
+    var cls_id = $('#std_cls').val();
+    var sub_id = $('#subject').val();
+    
+    window.location = "<?=base_url().'lecture/students/remarks' ?>?std_id="+std_id+"&cls_id="+cls_id+"&sub_id="+sub_id;
+};
 
 $('#datetimepicker1').datepicker();
 $('#tp-default').timepicker(); 

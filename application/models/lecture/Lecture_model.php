@@ -57,5 +57,29 @@ class Lecture_model extends MY_Model{
             ->where('lec_id',$lec_id)
             ->get()->result();
    }
+    
+   function getStudentRemarks($cls_id,$sub_id,$std_id, $lec_id){
+    return $this->db->select('remark.title as title, remark.description, remark.date, remark.time ')
+              ->from('remark')
+              ->where('cls_id', $cls_id)
+              ->where('sub_id', $sub_id)
+              ->where_in('std_id', array($std_id, 0))   
+              ->where('lec_id', $lec_id) 
+              ->get()->result();
+   }
+   function getStById($id){
+       return $this->db->where('id', $id)
+               ->get('students')->row();
+   }
+   
+   function getClsRemarks($cls_id, $sub_id, $lec_id){
+       return $this->db->where('cls_id', $cls_id)
+                       ->where('sub_id', $sub_id)
+                       ->where('lec_id', $lec_id)
+                       ->where('std_id', 0)
+                       ->get('remark')
+                       ->result();
+   }
+   
 
 }
