@@ -176,7 +176,6 @@
 <script>
 
  // load subjects.
- 
  $('#std_cls').change(function() {
     var cid = $(this).val();
     
@@ -233,6 +232,7 @@ function v_rmk(std_id){
 
 $('#datetimepicker1').datepicker();
 $('#tp-default').timepicker(); 
+$('#rmk_tbl').dataTable();
 </script>
 
 </body>
