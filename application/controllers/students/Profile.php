@@ -9,6 +9,7 @@ class Profile extends CI_Controller {
 	function index(){
 		if($user = $this->session->userdata('user')){
 		$id = $user['id'];
+        $d['user'] = $this->student->getStById($id);
 		$remark = $this->student->getTodayRemark($id);
 		$d['remark'] = $remark;
         $tot_remark = $this->student->getAllRemark($id);

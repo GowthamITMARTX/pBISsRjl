@@ -10,9 +10,13 @@
                     <span class=" ion-calendar "></span>
                     <span class="nav_title">Timetable</span>
                 </a>
-
             </li>
-            <!-- STUDENT CODE ENDING -->
+             <li>
+                <a href="<?=base_url();?>students/assignment">
+                    <span class="ion-android-folder"></span>
+                    <span class="nav_title">Assignment</span>
+                </a>
+            </li>
         <?php endif; ?>
  </ul>
 </nav>

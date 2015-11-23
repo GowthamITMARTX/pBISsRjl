@@ -9,7 +9,6 @@
 		<!-- top bar -->
 	<?php $this->load->view('student/inc/header'); ?>
     <?php $this->load->view('student/inc/nav') ?> 
-	<?php $user = $this->session->userdata('user');  ?>	
 		<!-- main content -->
 		<div id="main_wrapper">
 			<div class="page_content">

@@ -7,7 +7,10 @@ class Student_model extends MY_Model{
 	$q = $this->db->get_where('students', array('email' => $this->input->post('Student[email]'), 'nic_no'=> $this->input->post('Student[password]'),  'status'=>1));
 	if($q->num_rows() > 0){
 		$r = $q->first_row();
-		$user = (array) $r;
+		$user = array(
+        'id' => $r->id
+        );
+		
 		$this->session->set_userdata('user', $user);
 		return true;
 	}
@@ -15,6 +18,12 @@ class Student_model extends MY_Model{
 		return false;
 	}
 	}
+    function getStById($id){
+       return $this->db->where('id', $id)
+                  ->where('status', 1)
+                  ->get('students')
+                  ->row_array();
+    }
 	
 	function getTimeTable($id){
 		return $this->db->from("timetable")
@@ -23,7 +32,6 @@ class Student_model extends MY_Model{
 			->join("class","timetable.cls_id = class.id")
 			->where("student_cls_pool.std_id",$id)
 			->where("timetable.status",1 )
-			->where("class.status",1 )
 			->get()
 			->result();
 	}
@@ -48,5 +56,27 @@ class Student_model extends MY_Model{
                         ->where('(remark.std_id = '.$id.' OR (remark.std_id = 0 AND remark.cls_id in(select cls_id from student_cls_pool where std_id = '.$id.')))')
                         ->get()
                         ->result();
+    }
+    function getAssignment($id){
+        return $this->db->select('assignment.*, class.title as cls_t, subject.title as sub_t')
+                 ->from('assignment')
+                 ->join('class', 'assignment.cls_id = class.id')
+                 ->join('subject', 'assignment.sub_id = subject.id')
+                 ->join('std_assi','assignment.cls_id = std_assi.cls_id and assignment.sub_id = std_assi.sub_id' )
+                 ->where('std_assi.std_id', $id)
+                 ->where('assignment.status' , 1)
+                 ->get()
+                 ->result();
+             
+    }
+    
+    function update_assignment($data){
+       if($this->db->insert('submitted_assignment', $data)){
+           return true;
+       }
+       else{
+            return false;
+        }
+                 
     }
 }

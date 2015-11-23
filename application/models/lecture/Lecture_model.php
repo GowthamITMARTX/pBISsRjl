@@ -6,7 +6,9 @@ class Lecture_model extends MY_Model{
     $q = $this->db->get_where('lecture', array('email' => $this->input->post('Lecture[email]'), 'nic_no'=> $this->input->post('Lecture[password]'),  'status'=>1));
     if($q->num_rows() > 0){
         $r = $q->first_row();
-        $user = (array) $r;
+        $user = array(
+        'id' => $r->id
+        );
         $this->session->set_userdata('lecture', $user);
         return true;
     }
