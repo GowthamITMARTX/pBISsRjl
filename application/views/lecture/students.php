@@ -24,9 +24,13 @@
                    <div class="panel panel-default">
                             <div class="panel-body">
                             <?php if(isset($success)):  ?>
-                      <div class="alert alert-success" role="alert"><strong> <?=$success; ?></strong></div>
+                      <div class="alert alert-success" role="alert"><strong> <?=$success; ?></strong>
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      </div>
                     <?php elseif(isset($error)): ?>
-                        <div class="alert alert-danger" role="alert"><strong> *<?=$error; ?></strong></div>
+                        <div class="alert alert-danger" role="alert"><strong> *<?=$error; ?></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        </div>
                        <?php endif; ?>
                                 <div class="row">
                                     <div class="col-lg-12">

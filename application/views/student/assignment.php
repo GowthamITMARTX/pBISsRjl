@@ -42,47 +42,61 @@
                   ) </b></h3>
              </div>
              <div class="panel-body">
+                 <h3><?=$r->title ?></h3>
+                 <p><?=$r->description; ?></p>
+                 <?php if($r->file): ?>
+                 <p><a href="<?=base_url().'students/assignment/download/'.$r->file.'/'.$r->sub_t; ?> " class="btn btn-primary btn-xs"> <i class="glyphicon glyphicon-file" >PDF</i> - Download </a></p>
+                 <?php else: ?>
+                     Attachment unavailable.
+                 <?php endif ?>
+                 <?= form_open_multipart(''); ?>
                   <table class="table table-user-information">
                     <tbody>
-                    <tr>
-                        <td width="40%">Title:</td>
-                        <td width="60%"><?=$r->title ?></td>
-                      </tr>
-                      <tr>
-                        <td width="40%">Description:</td>
-                        <td width="60%"><?=$r->description; ?></td>
-                      </tr>
-                      <tr>
-                        <td width="40%">Pdf Download:</td>
-                          <?php if($r->file): ?>
-                        <td width="60%"><a href="<?=base_url().'students/assignment/download/'.$r->file.'/'.$r->sub_t; ?> " class="btn btn-primary btn-xs"> Download</a></td>
-                          <?php else: ?>
-                        <td width="40%">Attachment unavailable.</td>
-                          <?php endif ?>
-                      </tr>
                       <tr>
                         <td width="40%">Remaining Time:</td>
-                        <td width="60%"><?php 
-                        $this->load->helper('date');
-                        $now = time();
-                        $time = strtotime($r->date);
-                        $units = 2;
-                        echo timespan($time, $now);
+                          <td width="60%"><?php
+                              if(strtotime($r->date." ".$r->time) < time()  ) {
+                                echo "<div class='text-danger' ><strong>Time Up !!!</strong></div>";
+                              }
+                           else{
+                                echo timespan(time() ,strtotime($r->date), 4 );
+                            }
                         ?></td>
                       </tr>
                       
                       <tr>        
-                        <?php echo form_open_multipart('','name="form"'); ?>  
-                        <td>Upload Your Assignment<br> <small>( size less then 2 mb )</small><br /><br /><input type="checkbox" name="agree" /> Agree</td>
-                        <td><input type="file" name="userfile" /> <input type='hidden' value="<?=$r->id; ?>" name="assi_id"/>
+
+                        <td>
+
+                            Upload Your Assignment<br> <small>( size less then 2 mb )</small><br /><br />
+                            <?php
+                            if(strtotime($r->date." ".$r->time) > time()  ) {
+                                ?><input type="checkbox" name="agree" onclick="$('.form-<?=$k?>').attr('disabled',!$(this).is(':checked')) " /> Agree<?php
+                            }
+                            ?>
+                            </td>
+                        <td>
+                            <input type="file" name="userfile" />
+                            <input type='hidden' value="<?=$r->id; ?>" name="assi_id"/>
                         <input type="hidden" name="s_date" value="<?=$r->date; ?>" />
                         <input type="hidden" name="s_time" value="<?=$r->time; ?>"
-                        <br /><br /><input type="submit" class="btn btn-success" value="Upload" name="form"/></td>
-                       <?php echo form_close(); ?>    
+                        <br /><br />
+                            <?php
+                            if(strtotime($r->date." ".$r->time) > time()  ) {
+                                ?>
+                                <input type="submit" class="btn btn-success form-<?=$k?> " disabled="disabled" value="Upload" name="form"/>
+                                <?php
+                            }
+                            ?>
+
+                        </td>
+
                       </tr>
                     
                     </tbody>
+
                   </table>
+                 <?= form_close(); ?>
             </div>
             </div>
          </div>

@@ -23,7 +23,7 @@ class Lecture_model extends MY_Model{
        ->like('timetable.title', "$lec->title$lec->name" )
        ->join('class',"class.id = timetable.cls_id")
 	   ->where("timetable.status",1)
-       ->select("timetable.start ,timetable.end  , class.title  ",false)
+       ->select("timetable.start ,timetable.end  , concat(class.title ,'\n',timetable.title ) as title ",false)
        ->get()->result();
     }
    function getClass(){

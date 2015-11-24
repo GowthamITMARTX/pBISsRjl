@@ -76,6 +76,12 @@
                                                        class="form-control capslock " data-parsley-required="true">
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label for="reg_permanent_address">IMAGE</label>
+                                           <input type="file" name="userfile" >
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="reg_permanent_address">PERMANENT ADDRESS</label>
                                             <textarea name="form[permanent_address]" id="reg_permanent_address"
