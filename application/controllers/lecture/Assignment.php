@@ -111,6 +111,7 @@ class Assignment extends CI_Controller
         }
     }
 
+
     function remove(){
         $this->lecture->delete_assignment();
     }
