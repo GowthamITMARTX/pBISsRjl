@@ -6,6 +6,9 @@ class Assignment extends MY_Controller
     {
         parent::__construct();
         $this->load->model('student/Student_model', 'student');
+        if(!$this->session->userdata('user')){
+            redirect(base_url().'students/login');
+        }
     }
 
     function index()

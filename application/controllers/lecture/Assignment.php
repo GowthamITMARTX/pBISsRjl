@@ -116,5 +116,62 @@ class Assignment extends CI_Controller
         $this->lecture->delete_assignment();
     }
 
+    function submitted(){
+        $d['class'] = $this->lecture->getClass();
+        $this->load->view('lecture/submitted_assi', $d);
+    }
+    function show(){
+        if($this->input->get('cid') && $this->input->get('sid')){
+            $lecture = $this->session->userdata('lecture');
+            $id = $lecture['id'];
+            $cid = $this->input->get('cid');
+            $sid = $this->input->get('sid');
+            $result = $this->lecture->submitted_assignment($id, $cid, $sid);
+            $this->load->model('student/Student_model', 'student');
+            echo '<table id="dt_basic" class=" table table-striped table-bordered ">
+                                       <thead>
+                                            <tr>
+                                                <th width="5%">#</th>
+                                                <th width="20%">Index No</th>
+                                                <th width="25%">Name</th>
+                                                <th width="30%">Final Date</th>
+                                                <th width="20%" >Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbl_data">';
+
+
+            foreach($result as $k=> $r){
+                $student = $this->student->getStById($r->std_id);
+
+                echo "<tr>";
+                echo "<td>".($k+1)."</td>";
+                echo "<td>".$student['index']."</td>";
+                echo "<td>".$student['name']."</td>";
+                echo "<td>".$r->date.'   '.$r->time."</td>";
+                echo '<td><a href="'.base_url('lecture/assignment/download/').'?f='.$r->name.'&n='.$student['index'].'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-file" >PDF</i> - Download</a></td>';
+                echo "</tr>";
+            }
+            echo ' </tbody>
+       </table>';
+        }
+    }
+
+    function download()
+    {
+        $file_name = $this->input->get('f');
+        $name = $this->input->get('n');
+        $this->load->helper('download');
+        $data = file_get_contents(realpath(APPPATH . '../uploads/' . $file_name));
+        $name_n = $name.'.pdf';
+        force_download($name_n, $data);
+    }
+
+    // this is a test function please delete this if you found
+    function test(){
+        $this->lecture->getClass();
+        echo $this->db->last_query();
+    }
+
 }
 

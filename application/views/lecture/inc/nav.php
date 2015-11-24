@@ -22,6 +22,21 @@
                     <span class="ion-android-folder"></span>
                     <span class="nav_title">Assignment</span>
                 </a>
+                <div class="sub_panel">
+                    <div class="side_inner">
+                        <h4 class="panel_heading panel_heading_first">Manage Assignment</h4>
+                        <ul>
+                            <li>
+                                <a href="<?= base_url() ?>lecture/assignment">
+                                    <span class="side_icon ion-ios7-folder-outline "></span>
+                                    <span class="badge badge-primary"></span> View Assignment
+                                </a>
+                            </li>
+                            <li><a href="<?= base_url() ?>lecture/assignment/submitted"><span class="side_icon  ion-android-friends "></span>
+                                    Submitted Students </a></li>
+                        </ul>
+                    </div>
+                </div>
             </li>
             <!-- STUDENT CODE ENDING -->
         <?php endif; ?>

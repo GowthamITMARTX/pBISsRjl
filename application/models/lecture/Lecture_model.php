@@ -27,8 +27,15 @@ class Lecture_model extends MY_Model{
        ->get()->result();
     }
    function getClass(){
-       return $this->db->where('status', 1)
-                ->get('class')->result();
+//       return $this->db->where('status', 1)
+//                ->get('class')->result();
+        return $this->db->select('class.*')
+                        ->from('class')
+                        ->join('class_pool', 'class_pool.cls_id =class.id')
+                        ->where('class_pool.lid', 1)
+                        ->where('class.status', 1)
+                        ->group_by('class.id')
+                        ->get()->result();
    }
    function getSubject($id){
        $q = "select subject.id, subject.title from subject where id in(select sid from class_pool where class_pool.cls_id = ?)";
@@ -91,5 +98,16 @@ class Lecture_model extends MY_Model{
 
     function delete_assignment(){
         $this->db->update('assignment' , array('status'=> 0 )  ,'id='.$this->input->get('a_id') );
+    }
+
+    function submitted_assignment($id, $cls_id , $sub_id){
+        return $this->db->select('submitted_assignment.*')
+                        ->from('submitted_assignment')
+                        ->join('assignment', 'submitted_assignment.assi_id = assignment.id')
+                        ->where('assignment.lec_id', $id)
+                        ->where('assignment.cls_id', $cls_id)
+                        ->where('assignment.sub_id', $sub_id)
+                        ->where('assignment.status', 1)
+                        ->get()->result();
     }
 }
