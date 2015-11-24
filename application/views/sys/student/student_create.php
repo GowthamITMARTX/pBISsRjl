@@ -47,7 +47,8 @@
                         <?php
                     }
                     ?>
-                    <form data-parsley-validate method="post">
+                    <?= form_open_multipart( current_url().($this->input->get('id') ? "?id=".$this->input->get('id'):"") , array('data-parsley-validate'=>'')); ?>
+                    <?= empty($result->id)?"": form_hidden('id' , $result->id)  ;  ?>
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <fieldset>
@@ -80,6 +81,16 @@
                                         <div class="form-group">
                                             <label for="reg_permanent_address">IMAGE</label>
                                            <input type="file" name="userfile" >
+                                            <?php
+                                           if( file_exists( "uploads/students/$result->profile_image " ) ){
+                                              ?>
+                                               <img  src="<?= base_url() ?>uploads/students/<?=$result->profile_image?>" class="img-thumbnail"  style="height: 150px;margin: 5px" >
+
+                                               <?php
+                                           }
+                                           // if($data = file_get_contents();)
+
+                                            ?>
                                         </div>
 
                                         <div class="form-group">

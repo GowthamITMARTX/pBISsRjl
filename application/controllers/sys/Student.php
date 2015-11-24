@@ -31,12 +31,14 @@ class Student extends MY_Controller
         $this->form_validation->set_rules('form[name]', 'Name', 'required');
 
         if ($this->form_validation->run() == TRUE){
+            $this->_upload();
             if($this->model->create()){
+
                 $this->session->set_flashdata('valid', 'Record Inserted Successfully');
             }else{
                 $this->session->set_flashdata('error', 'Record Insert Failure !!!');
             }
-            redirect(current_url());
+           // redirect(current_url());
         }else{
             if($this->input->post())
                 $this->session->set_flashdata('error', validation_errors() );
@@ -45,19 +47,25 @@ class Student extends MY_Controller
     }
 
     function edit(){
-        if($this->input->get('id')){
+        if($this->input->get('id') || $this->input->post('id')   ){
+            $id = $this->input->get('id') ? $this->input->get('id') : $this->input->post('id') ;
             $lec =  $this->model->getBy( array("id"=> $this->input->get('id') ),1);
             if(!is_object($lec)) show_404();
 
             $this->form_validation->set_rules('form[name]', 'Name', 'required');
 
             if ($this->form_validation->run() == TRUE){
-                if($this->model->update($this->input->post('form') , "id = ".$this->input->get('id') ) ){
+                $this->_upload();
+                $data = $this->input->post('form');
+                if( strlen($this->session->flashdata('file_name')) > 0 )
+                    $data['profile_image'] = $this->session->flashdata('file_name') ;
+               // p($data);
+                if($this->model->update($data , "id = $id" ) ){
                     $this->session->set_flashdata('valid', 'Record Update Successfully');
                 }else{
                     $this->session->set_flashdata('error', 'Record Uopdate Failure !!!');
                 }
-                redirect(current_url()."?id=".$this->input->get('id'));
+                redirect(current_url()."?id=".$id);
             }else{
                 if($this->input->post())
                     $this->session->set_flashdata('error', validation_errors() );
@@ -98,6 +106,20 @@ class Student extends MY_Controller
         $result = $this->model->getPaymentDetails($this->input->get('tran_id'));
 //        p($result);
         $this->load->view('sys/student/student_enrollment receipt',array('record'=>$result));
+    }
+
+    function _upload(){
+        $config['upload_path'] = './uploads/students';
+        $config['allowed_types'] = 'jpeg|png|jpg';
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload()) {
+           // p($this->upload->display_errors());
+            $this->session->set_flashdata('file_name',null);
+        } else {
+            $user = $this->upload->data();
+          //  p($user);
+            $this->session->set_flashdata('file_name', $user['file_name']);
+        }
     }
 
 }

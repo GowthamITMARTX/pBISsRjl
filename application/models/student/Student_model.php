@@ -18,6 +18,7 @@ class Student_model extends MY_Model{
 		return false;
 	}
 	}
+
     function getStById($id){
        return $this->db->where('id', $id)
                   ->where('status', 1)

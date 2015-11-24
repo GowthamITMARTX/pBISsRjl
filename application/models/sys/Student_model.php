@@ -14,7 +14,7 @@ class Student_model extends MY_Model{
         $d = $this->input->post('form');
         $d['create_by'] = $this->session->userdata('id');
         $d['create_date'] = date('d-m-Y') ;
-
+        $d['profile_image'] = $this->session->flashdata('file_name') ;
         $this->db->trans_begin();
         $this->db->insert($this->table, $d );
         if ($this->db->trans_status() === FALSE){
