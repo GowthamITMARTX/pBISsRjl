@@ -185,37 +185,39 @@
 
         if(cid != null && cid != ''){
             $('#subject').removeAttr('disabled');
-            $.get("<?=base_url() ?>lecture/students/subject", {id : cid}, function(data){
+            $.get("<?=base_url() ?>lecture/students/subject", {cid : cid}, function(data){
                 $('#subject').html(data);
-                $('#subject').change(function() {
-                    var sid = $(this).val();
-                    //get student table information
-                    $.get("<?=base_url() ?>lecture/students/all", {cid : cid, sid: sid}, function(data){
-                        $('#data_table').html(data);
-                        $('body').find('#dt_basic').dataTable();
-                        // remove send remark to all student button while table haven't any student details
-                        $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()">Send Remark to All Students</button>');
-                        if($('#v_rmk').length == false){
-                            $('#btn_id').remove();
-                            $('#all_rmk').html('<span id="btn_id"></span>');
-                        }
 
-                        $('#cls').attr('value', cid);
-                        $('#sub_id').attr('value', sid);
-
-                    });
-
-                    $.get("<?=base_url() ?>lecture/students/cls_remarks", {cls_id : cid, sub_id: sid}, function(data){
-                        $('#rmk_data').html(data);
-                        $('body').find('#rmk_tbl').dataTable();
-
-                    });
-
-                });
             });
         }else{
             $('#subject').attr('disabled', 'disabled');
         }
+    });
+    $('#subject').change(function() {
+        var sid = $(this).val();
+        var cid = $('#std_cls').val();
+        //get student table information
+        $.get("<?=base_url() ?>lecture/students/all", {cid : cid, sid: sid}, function(data){
+            $('#data_table').html(data);
+            $('body').find('#dt_basic').dataTable();
+            // remove send remark to all student button while table haven't any student details
+            $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()">Send Remark to All Students</button>');
+            if($('#v_rmk').length == false){
+                $('#btn_id').remove();
+                $('#all_rmk').html('<span id="btn_id"></span>');
+            }
+
+            $('#cls').attr('value', cid);
+            $('#sub_id').attr('value', sid);
+
+        });
+
+        $.get("<?=base_url() ?>lecture/students/cls_remarks", {cls_id : cid, sub_id: sid}, function(data){
+            $('#rmk_data').html(data);
+            $('body').find('#rmk_tbl').dataTable();
+
+        });
+
     });
 
     function sid(id){

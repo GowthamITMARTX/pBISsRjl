@@ -37,6 +37,11 @@
                                                 <option value="">SUBJECTS</option>
                                             </select>
                                         </div>
+                                        <div class="col-sm-4">
+                                            <select class="form-control" id="assignment" disabled="disabled">
+                                                <option value="">Assignment</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -96,19 +101,30 @@
             $('#subject').removeAttr('disabled');
             $.get("<?=base_url() ?>lecture/students/subject", {id : cid}, function(data){
                 $('#subject').html(data);
-                $('#subject').change(function() {
-                    var sid = $(this).val();
-                    //get student table information
-                    $.get("<?=base_url() ?>lecture/assignment/show", {cid : cid, sid: sid}, function(data){
-                        $('#data_table').html(data);
-                        $('body').find('#dt_basic').dataTable();
-                   });
-
-                });
             });
         }else{
             $('#subject').attr('disabled', 'disabled');
         }
+    });
+    $('#subject').change(function() {
+        var sid = $(this).val();
+        //get assignment sort by class , subject and assignment
+        if(sid != null && sid != '') {
+            $.get("<?=base_url() ?>lecture/assignment/show", {sid: sid}, function (data) {
+                $('#assignment').html(data).removeAttr('disabled');
+            });
+        }else{
+            $('#assignment').attr('disabled', 'disabled');
+        }
+
+    });
+    $('#assignment').change(function() {
+        var aid = $(this).val();
+        $.get("<?=base_url() ?>lecture/assignment/show_student", {aid : aid  }, function(data){
+            $('#data_table').html(data);
+            $('body').find('#dt_basic').dataTable();
+        });
+
     });
 </script>
 

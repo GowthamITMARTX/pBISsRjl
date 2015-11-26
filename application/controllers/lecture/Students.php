@@ -63,20 +63,25 @@ class Students extends My_Controller{
        
     }
     function subject(){
-        if($id = $this->input->get('id')){
-        $result = $this->lecture->getSubject($id);
+        if($cid= $this->input->get('cid')){
+            $lecture = $this->session->userdata('lecture');
+            $lec_id = $lecture['id'];
+        $result = $this->lecture->getSubject($cid,$lec_id);
             echo "<option value='' >--CHOOSE--</option>";
          foreach($result as $r){
              echo "<option value='".$r->id."' >".$r->title."</option>";
          }
        }
     }
+
     function all(){
         
        if($this->input->get('cid') && $this->input->get('sid')){
           $cid = $this->input->get('cid');
           $sid = $this->input->get('sid');
-          $result = $this->lecture->getStudent($cid, $sid);
+           $lecture = $this->session->userdata('lecture');
+           $lec_id = $lecture['id'];
+          $result = $this->lecture->getStudent($cid, $sid , $lec_id);
           echo '<table id="dt_basic" class=" table table-striped table-bordered ">
                                        <thead>
                                             <tr>
