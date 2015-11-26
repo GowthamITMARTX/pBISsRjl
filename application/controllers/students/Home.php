@@ -13,6 +13,8 @@ class Home extends CI_Controller{
             $d['remark'] = $remark;
             $tot_remark = $this->student->getAllRemark($id);
             $d['tot_remark'] = $tot_remark;
+            $payments = $this->student->paymentDetails($id);
+            $d['payments'] = $payments;
             $this->load->view('student/dashboard', $d);
         }
         else{

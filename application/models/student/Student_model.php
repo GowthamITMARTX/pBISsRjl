@@ -80,4 +80,15 @@ class Student_model extends MY_Model{
         }
                  
     }
+    function paymentDetails($id){
+        return $this->db->select('student_cls_pool.fee as tot, class.title, sum(std_payment.amount) as paid ')
+            ->from('student_cls_pool')
+            ->join('std_payment','std_payment.std_cls_id = student_cls_pool.id and std_payment.status = 1' ,'left')
+            ->join('class', 'student_cls_pool.cls_id = class.id and class.status = 1')
+            ->where('student_cls_pool.std_id', $id)
+            ->where('student_cls_pool.status', 1)
+            ->group_by('std_payment.cls_id')
+            ->get()
+            ->result();
+    }
 }

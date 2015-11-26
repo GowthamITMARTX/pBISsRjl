@@ -91,6 +91,19 @@
                     </div>
                 </div>
             </div>
+            <div class="clearfix">
+                <div class="col-lg-12">
+                <?php foreach($payments as $p): ?>
+                    <div class="alert alert-warning alert-dismissable fade in">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4> Class : <?=$p->title.br(1); ?></h4>
+                    <h5> Total Fees: <?=number_format($p->tot).br(1); ?></h5>
+                    <h5> Paid : <?php echo (($p->paid != null && $p->paid != 0) ? number_format($p->paid) : 0.00); ?></h5>
+                    <h5> Balance : <?=number_format(($p->tot - $p->paid)).br(1); ?></h5>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -98,7 +111,44 @@
 <!-- clndr -->
 <script src="<?=base_url() ?>assets/lib/underscore-js/underscore-min.js"></script>
 <script src="<?=base_url() ?>assets/lib/CLNDR/src/clndr.js"></script>
-<script src="<?=base_url() ?>assets/js/apps/tisa_todo.js"></script>
+<script type="text/javascript">
+
+    // todo calendar
+
+    $(function() {
+        tisa_calendar.miniCal();
+    })
+
+    tisa_calendar = {
+        miniCal: function() {
+            if ($('#mini-clndr').length) {
+                var tisa_daysOfTheWeek = [];
+                for(var i = 0; i < 7; i++) {
+                    tisa_daysOfTheWeek.push( moment().weekday(i).format('ddd') );
+                }
+
+                $('#mini-clndr').clndr({
+                    template: $('#mini-clndr-template').html(),
+                    events: todo_events,
+                    clickEvents: {
+                        click: function(target) {
+                            if(target.events.length) {
+                                var daysContainer = $('#mini-clndr').find('.days-container');
+                                daysContainer.toggleClass('show-events', true);
+                                $('#mini-clndr').find('.x-button').click( function() {
+                                    daysContainer.toggleClass('show-events', false);
+                                });
+                            }
+                        }
+                    },
+                    adjacentDaysChangeMonth: true,
+                    weekOffset: 1,
+                    daysOfTheWeek: tisa_daysOfTheWeek
+                });
+            }
+        }
+    }
+</script>
 </body>
 
 <!-- Mirrored from tisa-admin.tzdthemes.com/tasks_summary.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 07 Aug 2015 05:23:39 GMT -->

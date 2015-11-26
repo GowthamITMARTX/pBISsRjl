@@ -18,7 +18,7 @@ class Login extends CI_Controller{
             if($this->form_validation->run()){
             if($this->student->login()){
             if($this->session->userdata('user')){
-                redirect(base_url('students/profile'));
+                redirect(base_url('students/home'));
             }
         }
         else{
