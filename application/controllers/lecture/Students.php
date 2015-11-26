@@ -10,7 +10,9 @@ class Students extends My_Controller{
     }
      
     function index(){
-       $d['class'] = $this->lecture->getClass();
+        $lecture = $this->session->userdata('lecture');
+        $id = $lecture['id'];
+        $d['class'] = $this->lecture->getClass($id);
       
       if($this->input->post('title')){
           $this->load->library('form_validation');
@@ -20,7 +22,7 @@ class Students extends My_Controller{
         $this->form_validation->set_rules('rtime','Time' ,'required'); 
         
         if($this->form_validation->run() == true){
-            $lecture = $this->session->userdata('lecture');
+           // $lecture = $this->session->userdata('lecture');
             $date = date('Y-m-d', strtotime($this->input->post('rdate')));
             if($this->input->post('send') == 'single'){
              $data = array(

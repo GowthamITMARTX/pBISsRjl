@@ -42,8 +42,9 @@ class Assignment extends CI_Controller
             $d['error'] = "Please fill all fields";
         }
 
-
-        $d['class'] = $this->lecture->getClass();
+        $lecture = $this->session->userdata('lecture');
+        $id = $lecture['id'];
+        $d['class'] = $this->lecture->getClass($id);
         $this->load->view('lecture/assignment', $d);
     }
 
@@ -98,6 +99,7 @@ class Assignment extends CI_Controller
     }
 
 
+  
     function remove()
     {
         $this->lecture->delete_assignment();
@@ -105,7 +107,9 @@ class Assignment extends CI_Controller
 
     function submitted()
     {
-        $d['class'] = $this->lecture->getClass();
+        $lecture = $this->session->userdata('lecture');
+        $id = $lecture['id'];
+        $d['class'] = $this->lecture->getClass($id);
         $this->load->view('lecture/submitted_assi', $d);
     }
 
@@ -162,6 +166,7 @@ class Assignment extends CI_Controller
             }
         }
     }
+
 
 }
 

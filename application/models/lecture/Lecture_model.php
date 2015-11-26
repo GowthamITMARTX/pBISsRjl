@@ -1,5 +1,6 @@
 <?php
 
+
 class Lecture_model extends MY_Model
 {
     function login()
@@ -22,12 +23,7 @@ class Lecture_model extends MY_Model
         return $this->db->from("timetable")->like('timetable.title', "$lec->title$lec->name")->join('class', "class.id = timetable.cls_id")->where("timetable.status", 1)->select("timetable.start ,timetable.end  , concat(class.title ,'\n',timetable.title ) as title ", false)->get()->result();
     }
 
-    function getClass()
-    {
-        //       return $this->db->where('status', 1)
-        //                ->get('class')->result();
-        return $this->db->select('class.*')->from('class')->join('class_pool', 'class_pool.cls_id =class.id')->where('class_pool.lid', 1)->where('class.status', 1)->group_by('class.id')->get()->result();
-    }
+
 
     function getSubject($cid,$lid)
     {
@@ -40,10 +36,19 @@ class Lecture_model extends MY_Model
             ->result();
     }
 
-    function getStudent($cls_id, $sub_id , $lid )
-    {
-        return $this->db->from("students")
-            ->select("students.*")
+ 
+   function getClass($id){
+        return $this->db->select('class.*')
+                        ->from('class')
+                        ->join('class_pool', 'class_pool.cls_id =class.id')
+                        ->where('class_pool.lid', $id)
+                        ->where('class.status', 1)
+                        ->group_by('class.id')
+                        ->get()->result();
+   }
+
+  function getStudent($cls_id , $sub_id,$lid){
+          return $this->db->select("students.*")
             ->join("student_cls_pool","student_cls_pool.std_id=students.id")
             ->join("class_pool","class_pool.sid =  student_cls_pool.cls_id ")
             ->join("student_cls_subject","student_cls_subject.sld_cls_id = student_cls_pool.id")
