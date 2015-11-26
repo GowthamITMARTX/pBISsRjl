@@ -64,6 +64,7 @@ class Students extends My_Controller{
        $this->load->view('lecture/students', $d); 
        
     }
+
     function subject(){
         if($cid= $this->input->get('cid')){
             $lecture = $this->session->userdata('lecture');

@@ -99,7 +99,7 @@
 
         if(cid != null && cid != ''){
             $('#subject').removeAttr('disabled');
-            $.get("<?=base_url() ?>lecture/students/subject", {id : cid}, function(data){
+            $.get("<?=base_url() ?>lecture/students/subject", {cid : cid}, function(data){
                 $('#subject').html(data);
             });
         }else{

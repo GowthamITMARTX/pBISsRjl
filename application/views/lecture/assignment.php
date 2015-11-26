@@ -192,24 +192,26 @@
 
         if (cid != null && cid != '') {
             $('#subject').removeAttr('disabled');
-            $.get("<?=base_url() ?>lecture/students/subject", {id: cid}, function (data) {
+            $.get("<?=base_url() ?>lecture/students/subject", {cid: cid}, function (data) {
                 $('#subject').html(data);
-                $('#subject').change(function () {
-                    var sid = $(this).val();
-                    $('#std').val(sid);
-                    $.get("<?=base_url() ?>lecture/assignment/all", {cid: cid, sid: sid}, function (data) {
-                            $('#data_table').html(data);
-                            $('body').find('#dt_basic').dataTable();
-                            $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()">Create New Assignment</button>');
-                            $('#cls').attr('value', cid);
-                        }
-                    );
-                });
             });
         }
         else {
             $('#subject').attr('disabled', 'disabled');
         }
+    });
+
+    $('#subject').change(function () {
+        var sid = $(this).val();
+        var cid = $('#std_cls').val();
+        $('#std').val(sid);
+        $.get("<?=base_url() ?>lecture/assignment/all", {cid: cid, sid: sid}, function (data) {
+                $('#data_table').html(data);
+                $('body').find('#dt_basic').dataTable();
+                $('#btn_id').html('<button class="btn btn-primary btn-sm" style="float: right" data-toggle="modal" data-target="#myModal" onClick="send_all()">Create New Assignment</button>');
+                $('#cls').attr('value', cid);
+            }
+        );
     });
 
     function sid(id) {
@@ -224,6 +226,7 @@
         $('#date').val("");
         $('#time').val("");
     }
+
 
     assaignment = {
         edit: function (self) {

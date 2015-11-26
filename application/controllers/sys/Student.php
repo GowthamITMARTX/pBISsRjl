@@ -109,7 +109,7 @@ class Student extends MY_Controller
     }
 
     function _upload(){
-        $config['upload_path'] = './uploads/students';
+        $config['upload_path'] = './uploads/students/profile';
         $config['allowed_types'] = 'jpeg|png|jpg';
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload()) {

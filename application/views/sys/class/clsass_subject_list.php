@@ -8,9 +8,9 @@
     </div>
     <ul class="todo_list_wrapper">
         <li data-task-title="All Subject" >
-            <div class="todo_checkbox">
-                <input type="checkbox" name="all"  value="1" checked >
-            </div>
+            <!--<div class="todo_checkbox">
+                <input type="checkbox" name="all"  value="1"  >
+            </div>-->
             <div class="todo_star">
                 <span class="fa fa-star-o"></span>
             </div>
@@ -22,7 +22,7 @@
         <?php foreach($records as $k => $row): ?>
             <li data-task-title="<?= $row->subject ?>" data-task-label="<?= $row->lecture ?>" >
                 <div class="todo_checkbox">
-                    <input type="checkbox" name="sub[]"  value="<?= $row->sid ?>" >
+                    <input type="checkbox" name="sub[]" checked  value="<?= $row->sid ?>" >
                     <input type="hidden" name="fee[<?= $row->sid ?>]"  value="<?= $row->amount ?>" >
                 </div>
                 <span class="label color_c pull-right"><?= $row->lecture ?></span>

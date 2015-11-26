@@ -84,7 +84,7 @@
                                             <?php
                                            if( file_exists( "uploads/students/$result->profile_image " ) ){
                                               ?>
-                                               <img  src="<?= base_url() ?>uploads/students/<?=$result->profile_image?>" class="img-thumbnail"  style="height: 150px;margin: 5px" >
+                                               <img  src="<?= base_url() ?>uploads/students/profile/<?=$result->profile_image?>" class="img-thumbnail"  style="height: 150px;margin: 5px" >
 
                                                <?php
                                            }
