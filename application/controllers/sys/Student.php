@@ -13,6 +13,7 @@ class Student extends MY_Controller
         parent::__construct();
         $this->_checkLogin();
         $this->load->model('sys/student_model','model');
+        $this->load->model('sys/class_model', 'cls');
     }
 
     function index(){
@@ -88,7 +89,7 @@ class Student extends MY_Controller
     function enrollment(){
         $this->form_validation->set_rules('form[std_id]', '', 'required');
         $this->form_validation->set_rules('form[cls_id]', '', 'required');
-        $this->form_validation->set_rules('amount', '', 'required');
+        $this->form_validation->set_rules('amount', '', 'required|price');
         if ($this->form_validation->run() == TRUE){
             if($this->model->enroll()){
                 redirect(current_url()."?tran_id=".$this->session->flashdata('insert_id'));
@@ -122,4 +123,29 @@ class Student extends MY_Controller
         }
     }
 
+    function balance_payment(){
+        $this->form_validation->set_rules('form[std_id]', '', 'required');
+        $this->form_validation->set_rules('form[cls_id]', '', 'required');
+        $this->form_validation->set_rules('form[amount]', '', 'required|price');
+        if ($this->form_validation->run() == TRUE){
+            if($this->model->balancePayment()){
+                redirect(current_url()."?tran_id=".$this->session->flashdata('insert_id'));
+                $this->session->set_flashdata('valid', 'Record Inserted Successfully');
+            }else{
+                $this->session->set_flashdata('error', 'Record Insert Failure !!!');
+            }
+            redirect(current_url());
+        }
+        $this->load->view('sys/student/balance_payment');
+    }
+
+    function getClassByStudentId(){
+        $result = $this->cls->getClassByStudentId($this->input->get('std_id'));
+        echo "<option> Class List </option>";
+        foreach($result as $r){
+            echo "<option value='$r->id' data-object='".htmlentities(json_encode($r));
+            echo "' > $r->title </option>";
+        }
+
+    }
 }

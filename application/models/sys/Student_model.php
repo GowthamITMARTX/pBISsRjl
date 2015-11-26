@@ -82,6 +82,20 @@ class Student_model extends MY_Model{
         }
     }
 
+    function balancePayment(){
+        $this->db->insert('std_payment',$this->input->post('form'));
+        $id = $this->db->insert_id();
+        $this->db->update('std_payment',array('code'=>"INV-".str_repeat(0,5-strlen($id)).$id),"id=$id");
+        $this->session->set_flashdata('insert_id', $id );
+        if ($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+            return FALSE ;
+        }else{
+            $this->db->trans_commit();
+            return TRUE ;
+        }
+    }
+
     function getPaymentDetails($tran_id=0,$field='id'){
         $d = $this->db->from('std_payment')->where($field,$tran_id)->get()->row();
         if(is_object($d)){

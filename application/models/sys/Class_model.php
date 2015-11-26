@@ -105,4 +105,14 @@ class Class_model  extends MY_Model{
             ->get()->result();
     }
 
+    function getClassByStudentId($std_id){
+        return $this->db->from($this->table)
+            ->select("$this->table.id,$this->table.c_id,$this->table.title, student_cls_pool.fee ,std_payment.code,std_payment.std_cls_id ")
+            ->select_sum("std_payment.amount")
+            ->join("student_cls_pool","student_cls_pool.cls_id= $this->table.id")
+            ->join("std_payment","std_payment.std_cls_id= student_cls_pool.id")
+            ->where("student_cls_pool.std_id",$std_id)
+            ->get()->result();
+    }
+
 }

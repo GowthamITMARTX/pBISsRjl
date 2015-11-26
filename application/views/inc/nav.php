@@ -93,6 +93,12 @@
                                     <span class="badge badge-primary"></span> Student Enrollment
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?= base_url() ?>sys/student/balance_payment">
+                                    <span class="side_icon  ion-card "></span>
+                                    <span class="badge badge-primary"></span> Balance Payment
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

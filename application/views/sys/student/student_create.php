@@ -88,8 +88,6 @@
 
                                                <?php
                                            }
-                                           // if($data = file_get_contents();)
-
                                             ?>
                                         </div>
 
