@@ -27,23 +27,16 @@ class Student_model extends MY_Model{
     }
 	
 	function getTimeTable($id){
-//		return $this->db->from("timetable")
-//			->select("concat(timetable.title, '- ',class.title) as title, timetable.start, timetable.end ", false)
-//			->join("student_cls_pool","timetable.cls_id = student_cls_pool.cls_id")
-//			->join("class","timetable.cls_id = class.id")
-//			->where("student_cls_pool.std_id",$id)
-//			->where("timetable.status",1 )
-//			->get()
-//			->result();
 
         return $this->db->from("timetable")
-            ->select("concat(timetable.title, '- ',class.title) as title, timetable.start, timetable.end ", false)
-            ->join("student_cls_pool","timetable.cls_id = student_cls_pool.cls_id and student_cls_pool.status = 1")
+            ->join("student_cls_pool","timetable.cls_id = student_cls_pool.cls_id and student_cls_pool.status = 1 and student_cls_pool.std_id = {$id} ")
+            ->join("student_cls_subject","student_cls_subject.sld_cls_id = student_cls_pool.id and timetable.sub_id =  student_cls_subject.sub_id")
             ->join("class","timetable.cls_id = class.id and class.status =1")
-            ->where("student_cls_pool.std_id",$id)
+            ->select("concat(timetable.title, '- ',class.title) as title, timetable.start, timetable.end ", false)
             ->where("timetable.status",1 )
             ->get()
             ->result();
+        
 
 
 	}

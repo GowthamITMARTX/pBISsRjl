@@ -62,7 +62,7 @@ class Class_model  extends MY_Model{
             ->where("$this->pool.cls_id" ,$cls_id)
             ->join($this->subject , "$this->pool.sid = $this->subject.id " )
             ->join($this->lecture , "$this->pool.lid = $this->lecture.id " )
-            ->select("$this->pool.* , $this->subject.title as subject , Concat($this->lecture.title,$this->lecture.name) as lecture ",false)
+            ->select("$this->pool.* , $this->subject.id as sub_id , $this->subject.title as subject , $this->lecture.id as lid , Concat($this->lecture.title,$this->lecture.name) as lecture ",false)
             ->get()
             ->result();
     }

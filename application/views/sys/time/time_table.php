@@ -28,7 +28,7 @@
                         <div id='external-events'>
                             <h4>Subject List </h4>
                             <?php foreach($subject as $sub): ?>
-                                <div class='fc-event'><?= $sub->subject ?> - <?= $sub->lecture ?> </div>
+                                <div class='fc-event' data-sub_id="<?=$sub->sub_id?>" data-lid="<?=$sub->lid?>" ><?= $sub->subject ?> - <?= $sub->lecture ?> </div>
                             <?php endforeach ?>
                         </div>
 
@@ -73,6 +73,8 @@
             // store data so the calendar knows to render an event upon drop
             $(this).data('event', {
                 title: $.trim($(this).text()), // use the element's text as the event title
+                sub_id: $.trim($(this).data('sub_id')), // use the element's text as the event title
+                lid: $.trim($(this).data('lid')), // use the element's text as the event title
                 stick: true // maintain when user navigates (see docs on the renderEvent method)
             });
 
@@ -140,10 +142,9 @@
             droppable: true,
             drop: function(event) {
                 self = $(this);
-
                 $.ajax({
                     url : URL.base +"sys/timetable/addtimetable",
-                    data : { title : self.text() , start : moment(event._d).format('YYYY-MM-DD HH:mm:ss') , end : moment(event._d).format('YYYY-MM-DD HH:mm:ss') , cls_id : <?= $this->input->get('id') ?> },
+                    data : { sub_id :self.data('sub_id') , lid :self.data('lid') , title : self.text() , start : moment(event._d).format('YYYY-MM-DD HH:mm:ss') , end : moment(event._d).format('YYYY-MM-DD HH:mm:ss') , cls_id : <?= $this->input->get('id') ?> },
                     type : 'post',
                     success : function(){
                         console.log('drop is trigger');

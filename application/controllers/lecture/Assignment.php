@@ -107,10 +107,26 @@ class Assignment extends CI_Controller
 
     function submitted()
     {
-        $lecture = $this->session->userdata('lecture');
-        $id = $lecture['id'];
-        $d['class'] = $this->lecture->getClass($id);
-        $this->load->view('lecture/submitted_assi', $d);
+        if($this->input->is_ajax_request()){
+
+            $this->form_validation->set_rules('aid', 'Assignment', 'required');
+            if ($this->form_validation->run() == true){
+
+                if($this->lecture->assignmentResult()){
+                    echo json_encode( array('success' => " Saved Successfully " )  );
+                }else{
+                    echo json_encode( array('error' => "Oops Something goes wrong !!!" )  );
+                }
+            }else{
+                echo json_encode( array('error' => validation_errors() )  );
+            }
+        }else{
+            $lecture = $this->session->userdata('lecture');
+            $id = $lecture['id'];
+            $d['class'] = $this->lecture->getClass($id);
+            $this->load->view('lecture/submitted_assi', $d);
+        }
+
     }
 
     function show_student()
@@ -124,8 +140,9 @@ class Assignment extends CI_Controller
                                                 <th width="5%">#</th>
                                                 <th width="20%">Index No</th>
                                                 <th width="25%">Name</th>
-                                                <th width="30%">Final Date</th>
-                                                <th width="20%" >Download</th>
+                                                <th width="15%">Final Date</th>
+                                                <th width="5%" >File</th>
+                                                <th width="30%" >Result</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tbl_data">';
@@ -136,6 +153,7 @@ class Assignment extends CI_Controller
                 echo "<td>$r->name</td>";
                 echo "<td> $r->date  $r->time </td>";
                 echo '<td><a href="' . base_url('lecture/assignment/download/') . '?f=' . $r->name . '&n=' . $r->index . '" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-file" >PDF</i> - Download</a></td>';
+                echo "<td> <input type='text' class='int form-control ' size='5' name='result[$r->std_id]' value='$r->mark'   > </td>";
                 echo "</tr>";
             }
             echo ' </tbody>

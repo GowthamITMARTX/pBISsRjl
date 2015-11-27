@@ -19,6 +19,7 @@ class Timetable extends MY_Controller{
          if($user = $this->session->userdata('user')){
             $id = $user['id'];
             $timetable = $this->student->getTimeTable($id);
+//             echo $this->db->last_query();
             echo json_encode($timetable);
         }
     }

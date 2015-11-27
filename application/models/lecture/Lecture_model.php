@@ -19,8 +19,13 @@ class Lecture_model extends MY_Model
 
     function getTimeTable($id)
     {
-        $lec = $this->db->from("lecture")->where('id', $id)->get()->row();
-        return $this->db->from("timetable")->like('timetable.title', "$lec->title$lec->name")->join('class', "class.id = timetable.cls_id")->where("timetable.status", 1)->select("timetable.start ,timetable.end  , concat(class.title ,'\n',timetable.title ) as title ", false)->get()->result();
+//        $lec = $this->db->from("lecture")->where('id', $id)->get()->row();
+        return $this->db->from("timetable")
+            ->join('class', "class.id = timetable.cls_id")
+            ->where("timetable.status", 1)
+            ->where('timetable.lid',$id)
+            ->select("timetable.start ,timetable.end  , concat(class.title ,'\n',timetable.title ) as title ", false)
+            ->get()->result();
     }
 
 
@@ -124,5 +129,17 @@ class Lecture_model extends MY_Model
     function showAssignmentBySubId($sid, $lid)
     {
         return $this->db->from("assignment")->where("sub_id", $sid)->where("lec_id", $lid)->get()->result();
+    }
+
+    function assignmentResult(){
+        $aid = $this->input->post('aid');
+        $result = $this->input->post('result');
+
+        foreach($result as $k =>  $v ){
+            $d[] = array( 'std_id' =>$k , 'mark' => $v );
+        }
+        $this->db->where('assi_id',$aid);
+        return $this->db->update_batch('submitted_assignment', $d, 'std_id') ? true : false ;
+
     }
 }

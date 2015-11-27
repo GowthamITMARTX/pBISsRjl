@@ -24,9 +24,8 @@ class Time_table extends MY_Model
     }
 
     function deleteTime($id){
-        $this->db->update('timetable',array(
-            'status' => 0
-        ),'id='.$id);
+        $this->db->where("id",$id);
+        $this->db->delete('timetable');
     }
 
     function insertTimeTableId(){
