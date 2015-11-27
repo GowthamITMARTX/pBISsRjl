@@ -72,7 +72,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">STUDENTS <span id="btn_id"> </span></div>
+                        <div class="panel-heading">ASSIGNMENTS <span id="btn_id"> </span></div>
                         <div class="panel-body" id="data_table">
                             <table id="dt_basic" class=" table table-striped table-bordered ">
                                 <thead>

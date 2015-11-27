@@ -21,7 +21,7 @@
               <h3 class="panel-title" style="text-align: center;"><b>User Profile</b></h3>
             </div>
             <div class="panel-body">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="<?=base_url().'uploads/students/'.$user['profile_image']; ?>" class="img-circle img-responsive"> </div>
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="<?=base_url().'uploads/students/profile/'.$user['profile_image']; ?>" class="img-circle img-responsive"> </div>
                <div class=" col-md-9 col-lg-9 "> 
                   <table class="table table-user-information">
                     <tbody>

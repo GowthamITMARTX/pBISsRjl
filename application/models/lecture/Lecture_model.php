@@ -48,14 +48,28 @@ class Lecture_model extends MY_Model
    }
 
   function getStudent($cls_id , $sub_id,$lid){
-          return $this->db->select("students.*")
-            ->join("student_cls_pool","student_cls_pool.std_id=students.id")
-            ->join("class_pool","class_pool.sid =  student_cls_pool.cls_id ")
-            ->join("student_cls_subject","student_cls_subject.sld_cls_id = student_cls_pool.id")
-            ->where("class_pool.cls_id",$cls_id)
-            ->where("class_pool.lid",$lid)
-            ->where("student_cls_subject.sub_id ",$sub_id)
-            ->get()->result();
+//          return $this->db->select("students.*")
+//              ->from('students')
+//            ->join("student_cls_pool","student_cls_pool.std_id=students.id")
+//            ->join("class_pool","class_pool.sid =  student_cls_pool.cls_id ")
+//            ->join("student_cls_subject","student_cls_subject.sld_cls_id = student_cls_pool.id")
+//            ->where("class_pool.cls_id",$cls_id)
+//            ->where("class_pool.lid",$lid)
+//            ->where("student_cls_subject.sub_id ",$sub_id)
+//            ->get()->result();
+
+      // ASMAL ---
+             return $this->db->select('students.*')
+                 ->from('students')
+                 ->join('student_cls_pool', 'students.id = student_cls_pool.std_id and student_cls_pool.status = 1')
+                 ->join('student_cls_subject', 'student_cls_pool.id = student_cls_subject.sld_cls_id')
+                 ->where('student_cls_pool.cls_id', $cls_id)
+                 ->where('student_cls_subject.sub_id', $sub_id)
+                 ->where('students.status', 1)
+                 ->get()
+                 ->result();
+
+
     }
 
 
