@@ -142,4 +142,38 @@ class Expenses_model extends MY_Model
         return $this->db->update($this->income,$this->input->post('form'),"id=".$this->input->get('id')) ? true : false ;
     }
 
+    function employee_salary_report(){
+        return $this->db->from($this->employee)
+            ->select("{$this->employee}.* ,employee.index , concat(employee.title,employee.name) as name , {$this->user}.name as user " , false )
+            ->join($this->user, "{$this->user}.id = {$this->employee}.create_by")
+            ->join("employee", "employee.id = {$this->employee}.emp_id")
+            ->where("{$this->employee}.status",1)
+            ->get()->result();
+    }
+
+    function employee_salary_delete($id){
+        return $this->db->where('id',$id)
+            ->update($this->employee,array( 'status'=>0 ,
+                'delete_by' => $this->session->userdata('id') ,
+                'delete_date' =>date('Y-m-d h:m:s ')  )) ? true : false ;
+
+    }
+
+    function lecture_salary_report(){
+        return $this->db->from($this->lecture)
+            ->select("{$this->lecture}.* ,lecture.emp_id , concat(lecture.title,lecture.name) as name , {$this->user}.name as user " , false )
+            ->join($this->user, "{$this->user}.id = {$this->lecture}.create_by")
+            ->join("lecture", "lecture.id = {$this->lecture}.lec_id")
+            ->where("{$this->lecture}.status",1)
+            ->get()->result();
+    }
+
+    function lecture_salary_delete($id){
+        return $this->db->where('id',$id)
+            ->update($this->lecture,array( 'status'=>0 ,
+                'delete_by' => $this->session->userdata('id') ,
+                'delete_date' =>date('Y-m-d h:m:s ')  )) ? true : false ;
+
+    }
+
 }

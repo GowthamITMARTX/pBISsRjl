@@ -170,9 +170,33 @@ class Expenses extends MY_Controller{
         $this->load->view('sys/expenses/other_income',$d);
     }
 
-    function lecture_salary_report(){}
+    function lecture_salary_report(){
+        if($this->input->is_ajax_request()){
+            if($this->model->lecture_salary_delete($this->input->get('id')) ){
+                echo json_encode( array('success' => " Saved Successfully " )  );
+            }else{
+                echo json_encode( array('error' => "Oops Something goes wrong !!!" )  );
+            }
+        }else{
+            $d['records'] = $this->model->lecture_salary_report();
+            $this->load->view('sys/expenses/lecture_salary_report',$d);
+        }
+    }
 
-    function employee_salary_report(){}
+    function employee_salary_report(){
+
+        if($this->input->is_ajax_request()){
+            if($this->model->employee_salary_delete($this->input->get('id')) ){
+                echo json_encode( array('success' => " Saved Successfully " )  );
+            }else{
+                echo json_encode( array('error' => "Oops Something goes wrong !!!" )  );
+            }
+        }else{
+            $d['records'] = $this->model->employee_salary_report();
+            $this->load->view('sys/expenses/employee_salary_report',$d);
+        }
+
+    }
 
 
 

@@ -19,7 +19,7 @@
         <ul>
             <li><a href="<?= base_url() ?>">Dashboard</a></li>
             <li class="sep">\</li>
-            <li><a href="<?= base_url() ?>sys/expenses/expenses_type_list"> Expenses </a></li>
+            <li><a href="<?= base_url() ?>sys/expenses/employee_salary_report"> Expenses </a></li>
             <li class="sep">\</li>
             <li>Employee Expenses</li>
         </ul>
