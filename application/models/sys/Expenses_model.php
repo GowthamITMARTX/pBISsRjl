@@ -13,6 +13,7 @@ class Expenses_model extends MY_Model
     var $other = "expenses_other";
     var $employee = "expenses_employee";
     var $lecture = "expenses_lecture";
+    var $income = "other_income";
 
     function update($d=null,$con=null){
         return  $this->db->update($this->type,$d,$con) ? true : false ;
@@ -100,6 +101,45 @@ class Expenses_model extends MY_Model
             $this->db->trans_commit();
             return TRUE ;
         }
+    }
+
+    function other_income(){
+        $d = $this->input->post('form');
+        $d['create_by'] = $this->session->userdata('id');
+        $d['create_date'] = date('d-m-Y') ;
+        $this->db->trans_begin();
+        $this->db->insert($this->income, $d );
+
+
+
+
+        $id = $this->db->insert_id();
+        $this->db->update($this->income,array('code'=>"OTI-".str_repeat(0,5-strlen($id)).$id),"id=$id");
+        if ($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+            return FALSE ;
+        }else{
+            $this->db->trans_commit();
+            return TRUE ;
+        }
+    }
+
+    function getIncomeList(){
+        return $this->db->from($this->income)
+            ->select("{$this->income}.* , {$this->user}.name as user ")
+            ->join($this->user, "{$this->user}.id = {$this->income}.create_by")
+            ->where("{$this->income}.status",1)
+            ->get()->result();
+    }
+
+    function getIncomeById($id){
+        return $this->db->from($this->income)
+            ->where('id',$id)
+            ->get()->row();
+    }
+
+    function update_income(){
+        return $this->db->update($this->income,$this->input->post('form'),"id=".$this->input->get('id')) ? true : false ;
     }
 
 }

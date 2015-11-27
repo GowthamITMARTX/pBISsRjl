@@ -17,7 +17,7 @@
 </head>
 <body>
 <!-- top bar -->
-<?php $this->load->view('inc/header') ?>
+<?php $this->load->view('lecture/inc/header') ?>
 <!-- main content -->
 <div id="main_wrapper">
     <div class="page_content">

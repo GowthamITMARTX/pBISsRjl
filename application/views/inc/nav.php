@@ -1,9 +1,9 @@
     <nav id="side_nav">
     <ul>
-        <li>
-            <a href="<?= base_url() ?>"><span class="ion-speedometer"></span> <span
+      <!--  <li>
+            <a href="<?/*= base_url() */?>"><span class="ion-speedometer"></span> <span
                     class="nav_title">Dashboard</span></a>
-        </li>
+        </li>-->
         <?php $user = $this->session->userdata('role'); ?>
         <?php if( $user == 1  ): ?>
             <li>
@@ -153,6 +153,8 @@
             </li>
         <?php endif; ?>
 
+
+
         <?php if( $user == 1 ||  $user == 2 ): ?>
             <li>
                 <a href="#">
@@ -172,6 +174,16 @@
                         </ul>
                     </div>
                 </div>
+            </li>
+        <?php endif; ?>
+
+
+        <?php if( $user == 1   ): ?>
+            <li>
+                <a href="<?= base_url() ?>sys/expenses/other_income">
+                    <span class="ion-ios7-briefcase"></span>
+                    <span class="nav_title">Other Income</span>
+                </a>
             </li>
         <?php endif; ?>
 

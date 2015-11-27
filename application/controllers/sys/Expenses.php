@@ -128,8 +128,52 @@ class Expenses extends MY_Controller{
         $this->load->view('sys/expenses/other_expenses_list',$d);
     }
 
+    function other_income(){
+
+        $this->form_validation->set_rules('form[amount]', 'Amount', 'required|price');
+
+        if ($this->form_validation->run() == TRUE){
+            if($this->model->other_income()){
+                $this->session->set_flashdata('valid', 'Record Inserted Successfully');
+            }else{
+                $this->session->set_flashdata('error', 'Record Insert Failure !!!');
+            }
+            redirect(current_url());
+        }else{
+            if($this->input->post())
+                $this->session->set_flashdata('error', validation_errors() );
+        }
+        $this->load->view('sys/expenses/other_income');
+    }
+
+    function income_list(){
+        $d['records'] = $this->model->getIncomeList();
+        $this->load->view('sys/expenses/income_list',$d);
+    }
+
+    function income_edit(){
+        $d['result'] = $this->model->getIncomeById($this->input->get('id'));
+
+        $this->form_validation->set_rules('form[amount]', 'Amount', 'required|price');
+
+        if ($this->form_validation->run() == TRUE){
+            if($this->model->update_income()){
+                $this->session->set_flashdata('valid', 'Record Inserted Successfully');
+            }else{
+                $this->session->set_flashdata('error', 'Record Insert Failure !!!');
+            }
+            redirect(current_url()."?id=".$this->input->get('id'));
+        }else{
+            if($this->input->post())
+                $this->session->set_flashdata('error', validation_errors() );
+        }
+        $this->load->view('sys/expenses/other_income',$d);
+    }
+
     function lecture_salary_report(){}
 
     function employee_salary_report(){}
+
+
 
 }

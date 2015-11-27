@@ -22,7 +22,7 @@
                     <li><a href="#!">My messages</a></li>
                     <li><a href="tasks_summary.html">My tasks</a></li>
                     <li class="divider"></li>
-                    <li><a href="#" id="logout" >Log Out</a></li>
+                    <li><a href="#" id="logout" data-for="lecture/login" >Log Out</a></li>
                 </ul>
             </li>
             <!--<li><a href="javascript:void(0)" class="slidebar-toggle"><span class="navbar_el_icon ion-navicon-round"></span></a></li>-->

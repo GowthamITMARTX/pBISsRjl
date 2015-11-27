@@ -398,10 +398,11 @@ tisa_slidebar = {
 logout = {
     init: function () {
         $('.user_menu').on('click', '#logout', function () {
+            self = $(this);
             $.ajax({
                 url: URL.base + "home/logout",
                 success: function () {
-                    location.href = URL.base;
+                    location.href = URL.base+self.data('for');
                 }
             });
         });

@@ -185,8 +185,6 @@
 <script>
 
     // load subjects.
-
-
     $('#std_cls').change(function () {
         var cid = $(this).val();
 
