@@ -36,7 +36,7 @@ class Student_model extends MY_Model{
             ->where("timetable.status",1 )
             ->get()
             ->result();
-        
+
 
 
 	}

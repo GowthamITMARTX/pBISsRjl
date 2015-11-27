@@ -1,11 +1,11 @@
-    <nav id="side_nav">
+<nav id="side_nav">
     <ul>
-      <!--  <li>
-            <a href="<?/*= base_url() */?>"><span class="ion-speedometer"></span> <span
+        <!--  <li>
+            <a href="<? /*= base_url() */ ?>"><span class="ion-speedometer"></span> <span
                     class="nav_title">Dashboard</span></a>
         </li>-->
         <?php $user = $this->session->userdata('role'); ?>
-        <?php if( $user == 1  ): ?>
+        <?php if ($user == 1): ?>
             <li>
                 <a href="#">
                     <span class="ion-folder"></span>
@@ -33,7 +33,8 @@
                                     <span class="badge badge-primary"></span> Course Summary
                                 </a>
                             </li>
-                            <li><a href="<?= base_url() ?>sys/course/create"><span class="side_icon ion-android-add"></span>
+                            <li><a href="<?= base_url() ?>sys/course/create"><span
+                                        class="side_icon ion-android-add"></span>
                                     Create Course </a></li>
                         </ul>
                         <h4 class="panel_heading panel_heading_first">Batch</h4>
@@ -44,7 +45,8 @@
                                     <span class="badge badge-primary"></span> Batch Summary
                                 </a>
                             </li>
-                            <li><a href="<?= base_url() ?>sys/batch/create"><span class="side_icon ion-android-add"></span>
+                            <li><a href="<?= base_url() ?>sys/batch/create"><span
+                                        class="side_icon ion-android-add"></span>
                                     Create Batch </a></li>
                         </ul>
 
@@ -65,7 +67,7 @@
             </li>
         <?php endif; ?>
 
-        <?php if( $user == 1  ): ?>
+        <?php if ($user == 1): ?>
             <li>
                 <a href="#">
                     <span class="ion-android-contact"></span>
@@ -82,7 +84,8 @@
                                     <span class="badge badge-primary"></span> Student List
                                 </a>
                             </li>
-                            <li><a href="<?= base_url() ?>sys/student/create"><span class="side_icon ion-android-add-contact "></span>
+                            <li><a href="<?= base_url() ?>sys/student/create"><span
+                                        class="side_icon ion-android-add-contact "></span>
                                     Create Student </a></li>
                         </ul>
                         <h4 class="panel_heading "> Class pool </h4>
@@ -105,36 +108,15 @@
             </li>
         <?php endif; ?>
 
-        <?php if( $user == 1  ): ?>
-            <li>
-                <a href="#">
-                    <span class="ion-person"></span>
-                    <span class="nav_title">Lecturer</span>
-                </a>
-                <div class="sub_panel">
-                    <div class="side_inner">
-                        <h4 class="panel_heading panel_heading_first">Manage Lecturer</h4>
-                        <ul>
-                            <li>
-                                <a href="<?= base_url() ?>sys/lecture">
-                                    <span class="side_icon  ion-person-stalker "></span>
-                                    <span class="badge badge-primary"></span> Lecturer List
-                                </a>
-                            </li>
-                            <li><a href="<?= base_url() ?>sys/lecture/create"><span class="side_icon ion-person-add "></span>
-                                    Create Lecture </a></li>
-                            <li><a href="<?= base_url() ?>sys/lecture/subject"><span
-                                        class="side_icon ion-usb "></span> Lecturer Subject Pool </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
+        <?php if ($user == 1): ?>
+
 
             <li>
                 <a href="#">
                     <span class="ion-android-social-user"></span>
                     <span class="nav_title">Employee</span>
                 </a>
+
                 <div class="sub_panel">
                     <div class="side_inner">
                         <h4 class="panel_heading panel_heading_first">Manage Employee</h4>
@@ -145,9 +127,25 @@
                                     <span class="badge badge-primary"></span> Employee List
                                 </a>
                             </li>
-                            <li><a href="<?= base_url() ?>sys/employee/create"><span class="side_icon ion-person-add "></span>
+                            <li><a href="<?= base_url() ?>sys/employee/create"><span
+                                        class="side_icon ion-person-add "></span>
                                     Create Employee </a></li>
                         </ul>
+                        <h4 class="panel_heading panel_heading_first">Manage Lecturer</h4>
+                        <ul>
+                            <li>
+                                <a href="<?= base_url() ?>sys/lecture">
+                                    <span class="side_icon  ion-person-stalker "></span>
+                                    <span class="badge badge-primary"></span> Lecturer List
+                                </a>
+                            </li>
+                            <li><a href="<?= base_url() ?>sys/lecture/create"><span
+                                        class="side_icon ion-person-add "></span>
+                                    Create Lecture </a></li>
+                            <li><a href="<?= base_url() ?>sys/lecture/subject"><span
+                                        class="side_icon ion-usb "></span> Lecturer Subject Pool </a></li>
+                        </ul>
+
                     </div>
                 </div>
             </li>
@@ -155,12 +153,14 @@
 
 
 
-        <?php if( $user == 1 ||  $user == 2 ): ?>
+
+        <?php if ($user == 1 || $user == 2): ?>
             <li>
                 <a href="#">
                     <span class="ion-ios7-briefcase"></span>
                     <span class="nav_title">Transaction</span>
                 </a>
+
                 <div class="sub_panel">
                     <div class="side_inner">
                         <h4 class="panel_heading panel_heading_first">Payment</h4>
@@ -172,22 +172,42 @@
                             </li>
                             <li><a href="<?= base_url() ?>cashier/payment/view"> Payment History </a></li>
                         </ul>
+                        <?php if ($user == 1): ?>
+                            <h4 class="panel_heading panel_heading_first">Other Income</h4>
+                            <ul>
+                                <li><a href="<?= base_url() ?>sys/expenses/other_income"> Other Income </a></li>
+                            </ul>
+                            <h4 class="panel_heading panel_heading_first">Lecture</h4>
+                            <ul>
+                                <li><a href="<?= base_url() ?>sys/expenses/lecture_salary"> Lecture Salary </a></li>
+                                <li><a href="<?= base_url() ?>sys/expenses/lecture_salary_report"> Lecture Salary
+                                        Report </a></li>
+                            </ul>
+                            <h4 class="panel_heading panel_heading_first">Employee</h4>
+                            <ul>
+                                <li><a href="<?= base_url() ?>sys/expenses/employee_salary"> Employee Salary </a></li>
+                                <li><a href="<?= base_url() ?>sys/expenses/employee_salary_report"> Employee Salary
+                                        Report </a></li>
+                            </ul>
+                            <h4 class="panel_heading panel_heading_first">Other</h4>
+                            <ul>
+                                <li><a href="<?= base_url() ?>sys/expenses/expenses_type"> Create Expenses Type </a>
+                                </li>
+                                <li><a href="<?= base_url() ?>sys/expenses/expenses_type_list"> Expenses Type List </a>
+                                </li>
+                                <li><a href="<?= base_url() ?>sys/expenses/other_expenses"> Other Expenses </a></li>
+                                <li><a href="<?= base_url() ?>sys/expenses/other_expenses_report"> Other Expenses
+                                        Report </a></li>
+                            </ul>
+
+                        <?php endif; ?>
                     </div>
                 </div>
             </li>
         <?php endif; ?>
 
 
-        <?php if( $user == 1   ): ?>
-            <li>
-                <a href="<?= base_url() ?>sys/expenses/other_income">
-                    <span class="ion-ios7-briefcase"></span>
-                    <span class="nav_title">Other Income</span>
-                </a>
-            </li>
-        <?php endif; ?>
-
-        <?php if( $user == 1  ): ?>
+        <?php if ($user == 1): ?>
             <li>
                 <a href="<?= base_url() ?>sys/timetable">
                     <span class=" ion-calendar "></span>
@@ -196,51 +216,32 @@
 
             </li>
 
+
+        <?php endif; ?>
+
+        <?php if ($user == 1): ?>
             <li>
-                <a href="#">
-                    <span class=" ion-card "></span>
-                    <span class="nav_title">Expenses</span>
+                <a href="<?= base_url() ?>sys/timetable">
+                    <span class=" ion-document-text "></span>
+                    <span class="nav_title">Report</span>
                 </a>
+
                 <div class="sub_panel">
                     <div class="side_inner">
-                        <h4 class="panel_heading panel_heading_first">Lecture</h4>
+                        <h4 class="panel_heading panel_heading_first">Payment Report</h4>
                         <ul>
-                            <li><a href="<?= base_url() ?>sys/expenses/lecture_salary"> Lecture Salary </a></li>
-                            <li><a href="<?= base_url() ?>sys/expenses/lecture_salary_report"> Lecture Salary Report </a></li>
-                        </ul>
-                        <h4 class="panel_heading panel_heading_first">Employee</h4>
-                        <ul>
-                            <li><a href="<?= base_url() ?>sys/expenses/employee_salary"> Employee Salary </a></li>
-                            <li><a href="<?= base_url() ?>sys/expenses/employee_salary_report"> Employee Salary Report </a></li>
-                        </ul>
-                        <h4 class="panel_heading panel_heading_first">Other</h4>
-                        <ul>
-                            <li>  <a href="<?= base_url() ?>sys/expenses/expenses_type"> Create Expenses Type </a> </li>
-                            <li> <a href="<?= base_url() ?>sys/expenses/expenses_type_list"> Expenses Type List   </a> </li>
-                            <li><a href="<?= base_url() ?>sys/expenses/other_expenses"> Other Expenses </a></li>
-                            <li><a href="<?= base_url() ?>sys/expenses/other_expenses_report"> Other Expenses Report </a></li>
+                            <li><a href="<?= base_url() ?>sys/report/daily_payment"> Daily Payment  </a></li>
+                            <li><a href="<?= base_url() ?>sys/report/student"> Student Payment History </a></li>
+                            <li><a href="<?= base_url() ?>sys/report/batch"> Batch Payment History </a></li>
+                            <li><a href="<?= base_url() ?>sys/report/course"> Course Payment History </a></li>
+                            <li><a href="<?= base_url() ?>sys/report/subject"> Subject Payment History </a></li>
+                            <li><a href="<?= base_url() ?>sys/report/lecture"> Lecture Payment History </a></li>
                         </ul>
                     </div>
                 </div>
+
             </li>
         <?php endif; ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <!--<li>
             <a href="#">
                 <span class="label label-danger">32</span>
