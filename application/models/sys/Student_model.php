@@ -107,4 +107,23 @@ class Student_model extends MY_Model{
             return false;
     }
 
+    function deleteStudentById($id){
+        $r1 = $this->db->where('status', 1)
+            ->where('std_id', $id)
+            ->get('std_payment');
+
+        $r2 = $this->db->where('status', 1)
+            ->where('std_id', $id)
+            ->get('student_cls_pool');
+
+        if($r1->num_rows() >0 && $r2->num_rows() > 0){
+             return false;
+        }
+        else{
+            $this->db->where('id', $id);
+            $this->db->delete('students');
+            return true;
+        }
+    }
+
 }

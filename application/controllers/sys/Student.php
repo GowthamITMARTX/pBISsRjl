@@ -148,4 +148,14 @@ class Student extends MY_Controller
         }
 
     }
+    function delete(){
+       $id = $this->input->post('id');
+        $result = $this->model->deleteStudentById($id);
+        if($result){
+            echo json_encode( array('success' => " Record deleted successfully." )  );
+        }else{
+            echo json_encode( array('error' => "Sorry!! Student already enrolled in some subjects. You can't delete a enrolled student." )  );
+        }
+
+    }
 }

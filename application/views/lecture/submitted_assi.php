@@ -67,6 +67,7 @@
                             <div class="pull-right"><a class="btn btn-success  " onclick="form.submit($(this)) "
                                                        data-for="#ass_form"> Save</a></div>
                         </div>
+
                         <div class="panel-body" id="data_table">
                             <table id="dt_basic" class=" table table-striped table-bordered ">
                                 <thead>

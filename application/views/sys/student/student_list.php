@@ -21,6 +21,9 @@
                                 &raquo; Student
                             </div>
                         </div>
+                        <div class="notification clearfix ">
+
+                        </div>
                         <div class="panel-body">
                             <table id="dt_tableTools" class=" table table-striped table-bordered ">
                                 <thead>
@@ -45,7 +48,8 @@
                                         <td><?= $row->user ?></td>
                                         <td> <a href="<?= current_url() ?>/edit/?id=<?= $row->id ?>" > <span class="ion-edit "></span>
                                                 <span class="nav_title">Edit</span> </a>
-                                        </td>
+                                             <a onclick="student.delete($(this))" data-id="<?=$row->id?>" style="float:right"><span class="fa fa-times"></span> <span class="nav_title">Delete</span> </a>
+                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>
@@ -76,7 +80,30 @@
 <!-- datatables functions -->
 <script src="<?= base_url() ?>assets/js/apps/tisa_datatables.js"></script>
 
+<script type="text/javascript">
+    student = {
+        delete: function(self){
+          var id = self.data('id');
+            $.ajax({
+                url: URL.current+'/delete',
+                type: "post",
+                dataType: "json",
+                data: 'id='+id,
+                success: function (data){
+                    if(data.success){
+                        $('.notification').html('<div style="margin: 5px" class="alert alert-success"></i> ' + data['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        self.parents('tr').remove();
+                    }
+                    if(data.error){
+                        $('.notification').html('<div style="margin: 5px" class="alert alert-danger"></i> ' + data['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    }
 
+                }
+
+            });
+        }
+    }
+</script>
 
 </body>
 
