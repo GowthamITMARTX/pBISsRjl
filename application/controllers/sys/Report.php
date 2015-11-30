@@ -26,9 +26,12 @@ class Report extends MY_Controller
         if($bid = $this->input->post('bid')){
             $filter = $this->input->post('filter');
             if($filter == "month"){
-                $month = date('m');
-                $year = date('Y');
-                $result = $this->report->batchReportByMonth($bid, $month, $year);
+//                $month = date('m');
+//                $year = date('Y');
+//                $result = $this->report->batchReportByMonth($bid, $month, $year);
+                $dates = $this->report->getDate();
+              //  echo "<option value=".$dates->date.">". ."</option>";
+
             }
             elseif($filter == 'year'){
                 $year = date('Y');
@@ -88,8 +91,11 @@ class Report extends MY_Controller
 
     // this is a test function if you see this PLEASE DELETE THIS..
     function test(){
-        $this->report->batchReportByMonth(1, 11);
-        echo $this->db->last_query();
+       $dates = $this->report->getDate();
+       // echo $this->db->last_query();
+       foreach($dates as $d){
+           echo $d->year.'- '.$d->month;
+       }
     }
 
 }

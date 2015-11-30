@@ -5,6 +5,12 @@ class Report_model extends MY_Model{
     function getBatch(){
         return $this->db->get('batch')->result();
     }
+
+    function getDate(){
+        return $this->db->select('date')
+            ->get('std_payment')
+            ->result();
+    }
     function batchReportByMonth($bid, $month, $year){
         return $this->db->select("class.title as class, course.title as course, sum(student_cls_pool.fee) as tot, sum(std_payment.amount) as paid_tot,")
             ->from('std_payment')
