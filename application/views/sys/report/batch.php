@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php $this->load->view('inc/head') ?>
     <link rel="stylesheet"
           href="<?= base_url() ?>assets/lib/DataTables/extensions/TableTools/css/dataTables.tableTools.min.css">
+    <?php $this->load->view('inc/head') ?>
+
 
 </head>
 <body>
@@ -122,13 +123,8 @@
     <?php $this->load->view('inc/nav') ?>
 </div>
 <?php $this->load->view('inc/foot') ?>
-<!-- datatables -->
-<script src="<?= base_url() ?>assets/lib/DataTables/media/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() ?>assets/lib/DataTables/media/js/dataTables.bootstrap.js"></script>
-<script src="<?= base_url() ?>assets/lib/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
-<script src="<?= base_url() ?>assets/lib/DataTables/extensions/Scroller/js/dataTables.scroller.min.js"></script>
-<!-- datatables functions -->
-<script src="<?= base_url() ?>assets/js/apps/tisa_datatables.js"></script>
+
+
 
 <script type="text/javascript">
 
@@ -178,7 +174,6 @@
                     success: function(data){
                         $('#data_table').html(data);
                         $('body').find('#dt_tableTools').dataTable();
-
                     }
 
                 });
@@ -190,7 +185,6 @@
                     data: "bid="+bid+"&year="+year,
                     success: function(data){
                         $('#data_table').html(data);
-                        $('body').find('#dt_tableTools').dataTable();
 
                     }
 
@@ -202,6 +196,12 @@
     }
 
 </script>
+<!-- datatables -->
+<script src="<?= base_url() ?>assets/lib/DataTables/media/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() ?>assets/lib/DataTables/media/js/dataTables.bootstrap.js"></script>
+<script src="<?= base_url() ?>assets/lib/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+<!-- datatables functions -->
+<script src="<?= base_url() ?>assets/js/apps/tisa_datatables.js"></script>
 
 </body>
 
