@@ -57,18 +57,18 @@
                                             <div class="col-sm-4">
                                                 <select class="form-control" id="month" disabled="disabled" >
                                                     <option value="">MONTH</option>
-                                                    <option value="1" <?php if(date('m') == 1){echo "selected";}?> >January</option>
-                                                    <option value="2" <?php if(date('m') == 2){echo "selected";}?>>February</option>
-                                                    <option value="3" <?php if(date('m') == 3){echo "selected";}?>>March</option>
-                                                    <option value="4" <?php if(date('m') == 4){echo "selected";}?>>April</option>
-                                                    <option value="5" <?php if(date('m') == 5){echo "selected";}?>>May</option>
-                                                    <option value="6" <?php if(date('m') == 6){echo "selected";}?>>June</option>
-                                                    <option value="7" <?php if(date('m') == 7){echo "selected";}?>>July</option>
-                                                    <option value="8" <?php if(date('m') == 8){echo "selected";}?>>August</option>
-                                                    <option value="9" <?php if(date('m') == 9){echo "selected";}?>>September</option>
-                                                    <option value="10" <?php if(date('m') == 10){echo "selected";}?>>October</option>
-                                                    <option value="11" <?php if(date('m') == 11){echo "selected";}?>>November</option>
-                                                    <option value="12" <?php if(date('m') == 12){echo "selected";}?>>December</option>
+                                                    <option value="1" id="1">January</option>
+                                                    <option value="2" id="2">February</option>
+                                                    <option value="3" id="3">March</option>
+                                                    <option value="4" id="4">April</option>
+                                                    <option value="5" id="5">May</option>
+                                                    <option value="6" id="6">June</option>
+                                                    <option value="7" id="7">July</option>
+                                                    <option value="8" id="8">August</option>
+                                                    <option value="9" id="9">September</option>
+                                                    <option value="10" id="10">October</option>
+                                                    <option value="11" id="11">November</option>
+                                                    <option value="12" id="12">December</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
@@ -140,6 +140,10 @@
 
         filter: function(self){
             var filter = self.value;
+            var d = new Date();
+            var m = d.getMonth()+1;
+
+            $('#month').find('#'+m).attr('selected', 'selected');
 
             $.ajax({
                 url: URL.current,
