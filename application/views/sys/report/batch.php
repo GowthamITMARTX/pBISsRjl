@@ -50,14 +50,29 @@
                                     <div class="form-group row sepH_b ">
                                         <div class="clearfix">
                                             <div class="col-sm-4">
-                                                <select class="form-control" id="year" disabled="disabled" onchange="report.year(this)">
-                                                    <option value="">FILTER YEAR</option>
+                                                <select class="form-control" id="year" disabled="disabled" >
+                                                    <option value="">YEAR</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
-                                                <select class="form-control" id="month" disabled="disabled" onchange="report.month(this)">
-                                                    <option value="">FILTER MONTH</option>
+                                                <select class="form-control" id="month" disabled="disabled" >
+                                                    <option value="">MONTH</option>
+                                                    <option value="1" <?php if(date('m') == 1){echo "selected";}?> >January</option>
+                                                    <option value="2" <?php if(date('m') == 2){echo "selected";}?>>February</option>
+                                                    <option value="3" <?php if(date('m') == 3){echo "selected";}?>>March</option>
+                                                    <option value="4" <?php if(date('m') == 4){echo "selected";}?>>April</option>
+                                                    <option value="5" <?php if(date('m') == 5){echo "selected";}?>>May</option>
+                                                    <option value="6" <?php if(date('m') == 6){echo "selected";}?>>June</option>
+                                                    <option value="7" <?php if(date('m') == 7){echo "selected";}?>>July</option>
+                                                    <option value="8" <?php if(date('m') == 8){echo "selected";}?>>August</option>
+                                                    <option value="9" <?php if(date('m') == 9){echo "selected";}?>>September</option>
+                                                    <option value="10" <?php if(date('m') == 10){echo "selected";}?>>October</option>
+                                                    <option value="11" <?php if(date('m') == 11){echo "selected";}?>>November</option>
+                                                    <option value="12" <?php if(date('m') == 12){echo "selected";}?>>December</option>
                                                 </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button id="start"class="btn btn-success " disabled="disabled" onclick="report.print()">FILTER</button>
                                             </div>
                                         </div>
 
@@ -80,12 +95,12 @@
                             <table id="dt_tableTools" class=" table table-striped table-bordered ">
                                 <thead>
                                 <tr>
-                                    <th width="10%">#</th>
-                                    <th width="20%">Course</th>
-                                    <th width="30%">Class</th>
-                                    <th width="30%">Total Fee</th>
-                                    <th width="10%"> Paid toal</th>
-                                    <th width="10%"> Balance</th>
+                                    <th width="5%">#</th>
+                                    <th width="30%">Course</th>
+                                    <th width="20%">Class</th>
+                                    <th width="15%">Total Fee</th>
+                                    <th width="15%"> Paid toal</th>
+                                    <th width="15%"> Balance</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -124,35 +139,61 @@
         },
 
         filter: function(self){
-            var bid = $('#batch').val();
             var filter = self.value;
 
             $.ajax({
                 url: URL.current,
                 type: "POST",
-                data: "bid="+bid+"&filter="+filter,
+                data: "filter="+filter,
                 success: function(data){
-
+                    $('#year').removeAttr('disabled');
+                    if(filter == "month"){
+                        $('#month').removeAttr('disabled');
+                    }
+                    else{
+                        $('#month').attr('disabled', 'disabled');
+                    }
+                    $('#year').html(data);
+                    $('#start').removeAttr('disabled');
                 }
 
             });
         },
 
-        print: function(self){
+        print: function(){
             var bid = $('#batch').val();
-            var filter = self.value;
+            var filter = $('#filter').val();
+            var year = $('#year').val();
 
-            $.ajax({
-                url: URL.current,
-                type: "POST",
-                data: "bid="+bid+"&filter="+filter,
-                success: function(data){
-                   $('#data_table').html(data);
-                   $('body').find('#dt_tableTools').dataTable();
+            if(filter == 'month'){
+            var month = $('#month').val();
+                $.ajax({
+                    url: URL.current,
+                    type: "POST",
+                    data: "bid="+bid+"&month="+month+"&year="+year,
+                    success: function(data){
+                        $('#data_table').html(data);
+                        $('body').find('#dt_tableTools').dataTable();
 
-                }
+                    }
 
-            });
+                });
+            }
+            else if(filter == 'year'){
+                $.ajax({
+                    url: URL.current,
+                    type: "POST",
+                    data: "bid="+bid+"&year="+year,
+                    success: function(data){
+                        $('#data_table').html(data);
+                        $('body').find('#dt_tableTools').dataTable();
+
+                    }
+
+                });
+            }
+
+
         }
     }
 

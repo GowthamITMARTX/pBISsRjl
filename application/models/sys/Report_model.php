@@ -6,8 +6,9 @@ class Report_model extends MY_Model{
         return $this->db->get('batch')->result();
     }
 
-    function getDate(){
-        return $this->db->select('date')
+    function getYear(){
+        return $this->db->select('YEAR(date) as year')
+            ->group_by('year')
             ->get('std_payment')
             ->result();
     }
