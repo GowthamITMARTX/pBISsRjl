@@ -2,6 +2,7 @@
 
 class Report_model extends MY_Model{
 
+    // Get Batch Report
     function getBatch(){
         return $this->db->get('batch')->result();
     }
@@ -33,6 +34,40 @@ class Report_model extends MY_Model{
             ->join('class', 'std_payment.cls_id = class.id and class.status = 1')
             ->join('course', 'class.c_id = course.id')
             ->where('class.b_id', $bid)
+            ->where('YEAR(std_payment.date)', $year)
+            ->where('std_payment.status', 1)
+            ->group_by('std_payment.cls_id')
+            ->get()
+            ->result();
+    }
+
+    // Get Course Report
+
+    function getCourse(){
+        return $this->db->get('course')->result();
+    }
+
+    function courseReportByMonth($cid, $month, $year){
+        return $this->db->select("batch.title as batch, class.title as class, sum(student_cls_pool.fee) as tot, sum(std_payment.amount) as paid_tot,")
+            ->from('std_payment')
+            ->join('student_cls_pool', 'std_payment.std_cls_id = student_cls_pool.id and student_cls_pool.status =1')
+            ->join('class', 'std_payment.cls_id = class.id and class.status = 1')
+            ->join('batch', 'class.b_id = batch.id')
+            ->where('class.c_id', $cid)
+            ->where('MONTH(std_payment.date)', $month)
+            ->where('YEAR(std_payment.date)', $year)
+            ->where('std_payment.status', 1)
+            ->group_by('std_payment.cls_id')
+            ->get()
+            ->result();
+    }
+    function courseReportByYear($cid, $year){
+        return $this->db->select("batch.title as batch, class.title as class, sum(student_cls_pool.fee) as tot, sum(std_payment.amount) as paid_tot,")
+            ->from('std_payment')
+            ->join('student_cls_pool', 'std_payment.std_cls_id = student_cls_pool.id and student_cls_pool.status =1')
+            ->join('class', 'std_payment.cls_id = class.id and class.status = 1')
+            ->join('batch', 'class.b_id = batch.id')
+            ->where('class.c_id', $cid)
             ->where('YEAR(std_payment.date)', $year)
             ->where('std_payment.status', 1)
             ->group_by('std_payment.cls_id')
