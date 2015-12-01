@@ -5,6 +5,7 @@ class Report extends MY_Controller
 
     function __construct(){
         parent::__construct();
+        $this->_checkLogin();
         $this->load->model('sys/Report_model', 'report');
     }
 
