@@ -103,7 +103,6 @@ class Report extends MY_Controller
         if($filter = $this->input->post('filter')){
             if($filter == "month"){
                 $years = $this->report->getYear();
-                echo '<option value="" >YEAR</option>';
                 foreach($years as $y){
                     if($y->year == date('Y')){
                         echo '<option value='.$y->year.' selected>'.$y->year.'</option>';

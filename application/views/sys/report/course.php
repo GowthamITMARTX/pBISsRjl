@@ -51,13 +51,13 @@
                                     <div class="form-group row sepH_b ">
                                         <div class="clearfix">
                                             <div class="col-sm-4">
+                                                <label>YEAR</label>
                                                 <select class="form-control" id="year" disabled="disabled" >
-                                                    <option value="">YEAR</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
+                                                <label>MONTH</label>
                                                 <select class="form-control" id="month" disabled="disabled" >
-                                                    <option value="">MONTH</option>
                                                     <option value="1" id="1">January</option>
                                                     <option value="2" id="2">February</option>
                                                     <option value="3" id="3">March</option>
