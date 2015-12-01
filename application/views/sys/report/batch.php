@@ -51,13 +51,15 @@
                                     <div class="form-group row sepH_b ">
                                         <div class="clearfix">
                                             <div class="col-sm-4">
+                                                <label>YEAR</label>
                                                 <select class="form-control" id="year" disabled="disabled" >
-                                                    <option value="">YEAR</option>
+
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
+                                                <label>MONTH</label>
                                                 <select class="form-control" id="month" disabled="disabled" >
-                                                    <option value="">MONTH</option>
+
                                                     <option value="1" id="1">January</option>
                                                     <option value="2" id="2">February</option>
                                                     <option value="3" id="3">March</option>
@@ -130,8 +132,18 @@
 
     report = {
         class: function(self){
-          var cid = self.value;
-            $('#filter').removeAttr('disabled');
+            var bid = self.value;
+
+            if(bid != ""){
+                $('#filter').removeAttr('disabled');
+            }
+            else{
+                $('#filter').attr('disabled', 'disabled');
+                $('#year').attr('disabled', 'disabled');
+                $('#month').attr('disabled', 'disabled');
+                $('#start').attr('disabled', 'disabled');
+
+            }
         },
 
         filter: function(self){
@@ -141,23 +153,32 @@
 
             $('#month').find('#'+m).attr('selected', 'selected');
 
-            $.ajax({
-                url: URL.current,
-                type: "POST",
-                data: "filter="+filter,
-                success: function(data){
+            if(filter != ""){
+                if(filter == "month"){
+                    $('#month').removeAttr('disabled');
                     $('#year').removeAttr('disabled');
-                    if(filter == "month"){
-                        $('#month').removeAttr('disabled');
-                    }
-                    else{
-                        $('#month').attr('disabled', 'disabled');
-                    }
-                    $('#year').html(data);
-                    $('#start').removeAttr('disabled');
+
+                }
+                else if(filter == "year"){
+                    $('#year').removeAttr('disabled');
+                    $('#month').attr('disabled', 'disabled');
                 }
 
-            });
+                $.ajax({
+                    url: URL.current,
+                    type: "POST",
+                    data: "filter="+filter,
+                    success: function(data){
+                        $('#year').html(data);
+                        $('#start').removeAttr('disabled');
+                    }
+
+                });
+            }else{
+                $('#month').attr('disabled', 'disabled');
+                $('#year').attr('disabled', 'disabled');
+                $('#start').attr('disabled', 'disabled');
+            }
         },
 
         print: function(){
@@ -185,7 +206,7 @@
                     data: "bid="+bid+"&year="+year,
                     success: function(data){
                         $('#data_table').html(data);
-
+                        $('body').find('#dt_tableTools').dataTable();
                     }
 
                 });

@@ -10,31 +10,51 @@ class Report extends MY_Controller
     }
 
     function daily_payment(){
-        $this->load->view('sys/report/daily_payment');
+        if($date = $this->input->post('date')){
+            sscanf($date, '%d/%d/%d', $m, $d, $y);
+          $income = $this->report->getIncome("$y-$m-$d");
+          $exp = $this->report->getExpenses("$y-$m-$d");
+          $this->load->view('sys/report/daily_payment',array('result'=>$income , 'date' => $date, 'exp' => $exp ));
+
+
+        }
+        else{
+            $this->load->view('sys/report/daily_payment' , array("result" => array() , 'date' => date('m/d/Y'), 'exp' => "" ) );
+        }
+
     }
 
     function student(){
-        $this->load->view('sys/report/student');
+
+        if($search = $this->input->post('search')){
+           $search = htmlspecialchars($search , ENT_QUOTES);
+            $this->load->model('student/Student_model', 'student');
+            $student = $this->report->filterStudent($search);
+            if(is_object($student)){
+                $st_payment = $this->student->paymentDetails($student->id);
+                $d['personal'] = $student;
+                $d['payment'] = $st_payment;
+            }
+            else{
+                $d['error'] = "Sorry no Result found";
+            }
+
+
+           $this->load->view('sys/report/student', $d);
+
+
+        }
+        else{
+            $this->load->view('sys/report/student');
+        }
+
     }
 
     function batch(){
         if($filter = $this->input->post('filter')){
-              if($filter == "month"){
+              if($filter == "month" || $filter == 'year'){
               $years = $this->report->getYear();
-                  echo '<option value="" >YEAR</option>';
-                foreach($years as $y){
-                    if($y->year == date('Y')){
-                        echo '<option value='.$y->year.' selected>'.$y->year.'</option>';
-                    }else{
-                        echo '<option value='.$y->year.'>'.$y->year.'</option>';
-                    }
 
-                }
-
-            }
-            elseif($filter == 'year'){
-                $years = $this->report->getYear();
-                echo '<option value="" >YEAR</option>';
                 foreach($years as $y){
                     if($y->year == date('Y')){
                         echo '<option value='.$y->year.' selected>'.$y->year.'</option>';
@@ -102,7 +122,7 @@ class Report extends MY_Controller
     function course(){
 
         if($filter = $this->input->post('filter')){
-            if($filter == "month"){
+            if($filter == "month" || $filter == 'year' ){
                 $years = $this->report->getYear();
                 foreach($years as $y){
                     if($y->year == date('Y')){
@@ -110,24 +130,8 @@ class Report extends MY_Controller
                     }else{
                         echo '<option value='.$y->year.'>'.$y->year.'</option>';
                     }
-
                 }
-
             }
-            elseif($filter == 'year'){
-                $years = $this->report->getYear();
-                echo '<option value="" >YEAR</option>';
-                foreach($years as $y){
-                    if($y->year == date('Y')){
-                        echo '<option value='.$y->year.' selected>'.$y->year.'</option>';
-                    }else{
-                        echo '<option value='.$y->year.'>'.$y->year.'</option>';
-                    }
-
-                }
-
-            }
-
         }
         elseif($this->input->post('cid') && $this->input->post('year')){
             $cid = $this->input->post('cid');
@@ -191,7 +195,8 @@ class Report extends MY_Controller
 
     // this is a test function if you see this PLEASE DELETE THIS..
     function test(){
-  echo date('m');
+  $result = $this->report->filterStudent("asmal");
+        p($result);
     }
 
 }
