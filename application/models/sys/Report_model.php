@@ -137,20 +137,6 @@ class Report_model extends MY_Model{
 
     }
 
-    // Get Student's Records
-    function filterStudent($key){
-        return $this->db->from("students")
-            ->select("students.*")
-            ->where("students.status",1)
-            ->group_start()
-            ->like("students.index", $key , 'after')
-            ->or_like("students.name", $key , 'after')
-            ->or_like("students.nic_no", $key , 'after')
-            ->or_like("students.email", $key , 'after')
-            ->group_end()
-            ->get()->row();
-    }
-
     function getFilterData(){
 
         $this->db->from('students')

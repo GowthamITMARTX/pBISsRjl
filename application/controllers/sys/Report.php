@@ -26,24 +26,16 @@ class Report extends MY_Controller
 
     function student(){
 
-        if($search = $this->input->post('search')){
-            $search = htmlspecialchars($search , ENT_QUOTES);
+        if($std_id = $this->input->get('std_id')){
+            $std_id = htmlspecialchars($std_id , ENT_QUOTES);
             $this->load->model('student/Student_model', 'student');
-            $student = $this->report->filterStudent($search);
-            if(is_object($student)){
-                $st_payment = $this->student->paymentDetails($student->id);
+                $student = $this->student->getStById($std_id);
+                $st_payment = $this->student->paymentDetails($std_id);
                 $d['personal'] = $student;
                 $d['payment'] = $st_payment;
-            }
-            else{
-                $d['error'] = "Sorry no Result found";
-            }
-
 
             $this->load->view('sys/report/student', $d);
-
-
-        }
+         }
         else{
             $this->load->view('sys/report/student');
         }

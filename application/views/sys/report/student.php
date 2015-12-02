@@ -28,9 +28,10 @@
                             <div class="row">
                                     <div class="form-group">
                                         <?= form_open(); ?>
-                                        <div class="col-sm-4" >
-                                            <input type="text" name="search" class="form-control" placeholder="Enter Your Filter Text (Name/Index/NIC/Email)" required autofocus>
-                                            </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="load Class" data-hide="#class_tag" class="form-control model-link " data-url="<?= base_url() ?>sys/student/getAll" data-type="table" data-for="form[std_id]" data-id="std_id" name="search">
+
+                                        </div>
                                         <div class="col-sm-4">
                                             <input type="submit" value="Filter" class="btn btn-primary" />
                                             </div> <?=form_close(); ?>
@@ -50,29 +51,29 @@
                                 <h3 class="panel-title" style="text-align: center;"><b>Student Information</b></h3>
                             </div>
                             <div class="panel-body">
-                                <div class="col-sm-3 col-sm-3 " align="center"> <img alt="User Pic" src="<?=base_url('uploads/students/profile').'/'.$personal->profile_image; ?>" class="img-circle img-responsive"></div>
+                                <div class="col-sm-3 col-sm-3 " align="center"> <img alt="User Pic" src="<?=base_url('uploads/students/profile').'/'.$personal['profile_image']; ?>" class="img-circle img-responsive"></div>
                                 <div class=" col-sm-9 col-lg-9 ">
                                     <table class="table table-user-information">
                                         <tbody>
                                         <tr>
                                             <td> Index No</td>
-                                            <td> <?=$personal->index; ?></td>
+                                            <td> <?=$personal['index']; ?></td>
                                         </tr>
                                         <tr>
                                             <td> Student Name</td>
-                                            <td> <?=$personal->title.$personal->name; ?></td>
+                                            <td> <?=$personal->title.$personal['name']; ?></td>
                                         </tr>
                                         <tr>
                                             <td> Address</td>
-                                            <td> <?=$personal->permanent_address; ?></td>
+                                            <td> <?=$personal['permanent_address']; ?></td>
                                         </tr>
                                         <tr>
                                             <td> NIC</td>
-                                            <td> <?=$personal->nic_no; ?></td>
+                                            <td> <?=$personal['nic_no']; ?></td>
                                         </tr>
                                         <tr>
                                             <td> Mobile No</td>
-                                            <td> <?=$personal->mobile_no; ?></td>
+                                            <td> <?=$personal['mobile_no']; ?></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -136,5 +137,15 @@
     <script src="<?= base_url() ?>assets/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 </body>
+
+<script>
+    $('body').on('click', '.tr-list', function (e) {
+        e.stopPropagation();
+        obj = $(this).data('object');
+        window.location.href = URL.current+'/?std_id='+obj.id;
+        $('#myModal').modal('hide');
+        $('.modal').removeData('bs.modal');
+    });
+</script>
 
 </html>
