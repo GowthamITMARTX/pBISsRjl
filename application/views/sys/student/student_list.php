@@ -84,23 +84,27 @@
     student = {
         delete: function(self){
           var id = self.data('id');
-            $.ajax({
-                url: URL.current+'/delete',
-                type: "post",
-                dataType: "json",
-                data: 'id='+id,
-                success: function (data){
-                    if(data.success){
-                        $('.notification').html('<div style="margin: 5px" class="alert alert-success"></i> ' + data['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                        self.parents('tr').remove();
-                    }
-                    if(data.error){
-                        $('.notification').html('<div style="margin: 5px" class="alert alert-danger"></i> ' + data['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            var conf = confirm('Are You Sure Do You Want to Delete this Student ?');
+            if(conf == true){
+                $.ajax({
+                    url: URL.current+'/delete',
+                    type: "post",
+                    dataType: "json",
+                    data: 'id='+id,
+                    success: function (data){
+                        if(data.success){
+                            $('.notification').html('<div style="margin: 5px" class="alert alert-success"></i> ' + data['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            self.parents('tr').remove();
+                        }
+                        if(data.error){
+                            $('.notification').html('<div style="margin: 5px" class="alert alert-danger"></i> ' + data['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        }
+
                     }
 
-                }
+                });
+            }
 
-            });
         }
     }
 </script>
