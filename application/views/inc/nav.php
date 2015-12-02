@@ -232,10 +232,11 @@
                         <ul>
                             <li><a href="<?= base_url() ?>sys/report/daily_payment"> Daily Payment  </a></li>
                             <li><a href="<?= base_url() ?>sys/report/student"> Student Payment History </a></li>
-                            <li><a href="<?= base_url() ?>sys/report/batch"> Batch Payment History </a></li>
-                            <li><a href="<?= base_url() ?>sys/report/course"> Course Payment History </a></li>
-                            <li><a href="<?= base_url() ?>sys/report/subject"> Subject Payment History </a></li>
-                            <li><a href="<?= base_url() ?>sys/report/lecture"> Lecture Payment History </a></li>
+                            <li><a href="<?= base_url() ?>sys/report/filter"> Report </a></li>
+                            <!--<li><a href="<?/*= base_url() */?>sys/report/batch"> Batch Payment History </a></li>
+                            <li><a href="<?/*= base_url() */?>sys/report/course"> Course Payment History </a></li>
+                            <li><a href="<?/*= base_url() */?>sys/report/subject"> Subject Payment History </a></li>
+                            <li><a href="<?/*= base_url() */?>sys/report/lecture"> Lecture Payment History </a></li>-->
                         </ul>
                     </div>
                 </div>

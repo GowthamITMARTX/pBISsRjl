@@ -150,4 +150,5 @@ class Report_model extends MY_Model{
             ->group_end()
             ->get()->row();
     }
+
 }

@@ -44,4 +44,40 @@ class Subject  extends MY_Controller
         $this->load->view('sys/subject/subject_create');
     }
 
+    function filter(){
+
+        $this->db->from('subject')
+            ->select('subject.id , subject.title')
+            ->where('subject.status',1);
+
+        if($this->input->get('cid') != 0  && $this->input->get('bid') != 0  ){
+            $this->db->join("class","class.c_id = {$this->input->get('cid')} and class.b_id = {$this->input->get('bid')}  ");
+        }else if($this->input->get('cid') != 0 ){
+            $this->db->join("class","class.c_id = {$this->input->get('cid')}    ");
+        }else if($this->input->get('bid') != 0  ){
+            $this->db->join("class","class.b_id = {$this->input->get('bid')}   ");
+        }
+        if($this->input->get('cid') != 0  || $this->input->get('bid') != 0  ){
+            $this->db->join("class_pool","class.id = class_pool.cls_id and class_pool.sid = subject.id ");
+        }
+
+
+        if($this->input->get('lid') != 0  ){
+            $this->db->join("lecture_pool","lecture_pool.lec_id = {$this->input->get('lid')}  and lecture_pool.sub_id = subject.id ");
+        }
+
+        $result = $this->db->get()->result();
+
+        echo "<option value='0' >*SUBJECT</option>";
+        foreach($result as $r){
+            if($r->id ==  $this->input->get('sid') ){
+                echo "<option value='$r->id' selected>$r->title</option>";
+            }else{
+                echo "<option value='$r->id' >$r->title</option>";
+            }
+        }
+
+    }
+
+
 }

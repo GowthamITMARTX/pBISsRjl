@@ -73,6 +73,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
+                                                <label> &nbsp; </label>
                                                 <button id="start"class="btn btn-success " disabled="disabled" onclick="report.print()">FILTER</button>
                                             </div>
                                         </div>
@@ -100,7 +101,7 @@
                                     <th width="30%">Batch</th>
                                     <th width="20%">Class</th>
                                     <th width="15%">Total Fee</th>
-                                    <th width="15%"> Paid toal</th>
+                                    <th width="15%"> Paid Total</th>
                                     <th width="15%"> Balance</th>
                                 </tr>
                                 </thead>
