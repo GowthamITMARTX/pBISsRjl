@@ -90,7 +90,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">PAYMENT</div>
                         <div class="panel-body">
-                            <table class=" table table-striped table-bordered" id="dt_tableTools">
+                            <table class=" table table-striped table-bordered" id="dt_basic">
                                     <thead>
                                     <tr>
                                         <th width="10%">#</th>
@@ -127,13 +127,9 @@
     </div>
     <?php $this->load->view('inc/foot') ?>
 
-
-
-
     <!-- datatables -->
     <script src="<?= base_url() ?>assets/lib/DataTables/media/js/jquery.dataTables.min.js"></script>
     <script src="<?= base_url() ?>assets/lib/DataTables/media/js/dataTables.bootstrap.js"></script>
-    <script src="<?= base_url() ?>assets/lib/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
     <!-- datatables functions -->
     <script src="<?= base_url() ?>assets/js/apps/tisa_datatables.js"></script>
     <!--datepicker-->

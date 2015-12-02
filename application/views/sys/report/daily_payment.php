@@ -43,14 +43,15 @@
 
                                 <?= form_close() ?>
                         </div>
-                <?php  $tot_income = 0; $tot_exp = 0; ?>
+                   <div id="tables">
+                <?php  $tot_income = 0; $tot_exp = 0; $k=0; $j=0?>
                         <?php if($result) : ?>
                             <div class="row" >
                                 <div class="col-sm-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">INCOME</div>
                                         <div class="panel-body">
-                                    <table id="dt_tableTools" class=" table table-striped table-bordered ">
+                                    <table id="income" class=" table table-striped table-bordered ">
                                         <thead>
                                         <tr>
                                             <th width="10%">#</th>
@@ -61,22 +62,22 @@
                                         <tbody>
 
                             <?php if(!empty($result->other)) :?>
-                                <?php foreach($result->other as $k => $other) : ?>
+                                <?php foreach($result->other as $other) : ?>
                                             <tr>
                                                 <td><?=$k+1; ?></td>
                                                 <td><?=$other->note; ?></td>
                                                 <td><?=number_format($other->amount); ?></td>
-                                                <?php $tot_income += $other->amount;  ?>
+                                                <?php $tot_income += $other->amount;  $k += 1; ?>
                                             </tr>
                                  <?php endforeach; ?>
                                 <?php endif; ?>
                             <?php if(!empty($result->std)) :?>
-                                <?php foreach($result->std as $k => $std) : ?>
+                                <?php foreach($result->std as $std) : ?>
                                     <tr>
                                         <td><?=$k+1; ?></td>
                                         <td><?="Student Payment - ".$std->index.' - '.$std->title.$std->name.' ('.$std->cls.')'; ?></td>
                                         <td><?=number_format($std->amount); ?></td>
-                                        <?php $tot_income += $std->amount;  ?>
+                                        <?php $tot_income += $std->amount;  $k += 1; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
@@ -89,6 +90,7 @@
 
                                 </div>
                             </div>
+
                         <?php endif; ?>
                         <?php if($exp) : ?>
                             <div class="row" >
@@ -106,22 +108,22 @@
                                                 </thead>
                                                 <tbody>
                                  <?php if(!empty($exp->emp)) : ?>
-                                     <?php foreach($exp->emp as $k => $emp) : ?>
+                                     <?php foreach($exp->emp as $emp) : ?>
                                             <tr>
-                                                <td><?=$k+1; ?></td>
+                                                <td><?=$j+1; ?></td>
                                                 <td><?="Employee Expenses - ".$emp->index.' - '.$emp->title.$emp->name; ?></td>
                                                 <td><?=number_format($emp->amount); ?></td>
-                                                <?php $tot_exp += $emp->amount; ?>
+                                                <?php $tot_exp += $emp->amount; $j += 1; ?>
                                             </tr>
                                      <?php endforeach; ?>
                                 <?php endif; ?>
                                                 <?php if(!empty($exp->lec)) : ?>
-                                                    <?php foreach($exp->lec as $k => $lec) : ?>
+                                                    <?php foreach($exp->lec as $lec) : ?>
                                                         <tr>
-                                                            <td><?=$k+1; ?></td>
+                                                            <td><?=$j+1; ?></td>
                                                             <td><?="Lecture Expenses - ".$lec->emp_id.' - '.$lec->title.$lec->name; ?></td>
                                                            <td><?=number_format($lec->amount); ?></td>
-                                                            <?php $tot_exp += $lec->amount; ?>
+                                                            <?php $tot_exp += $lec->amount; $j +=1; ?>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php endif; ?>
@@ -131,12 +133,15 @@
                                         </div>
                                     </div>
                                 </div>
+
                         <?php endif; ?>
+
+                            <?php if($exp || $result) : ?>
                             <div class="row" >
                                 <div class="col-sm-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">PROFIT</div>
-                                        <div class="panel-body">
+                                        <div class="panel-body" >
                                             <table class=" table table-striped table-bordered" id="profit">
                                                 <tbody>
                                                 <tr>
@@ -165,6 +170,8 @@
                                         </div>
                                     </div>
                     </div>
+                            <?php endif; ?>
+                   </div>
                 </div>
             </div>
 
@@ -177,18 +184,15 @@
 </div>
 <?php $this->load->view('inc/foot') ?>
 
-
-
-
 <!-- datatables -->
 <script src="<?= base_url() ?>assets/lib/DataTables/media/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() ?>assets/lib/DataTables/media/js/dataTables.bootstrap.js"></script>
-<script src="<?= base_url() ?>assets/lib/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
 <!-- datatables functions -->
 <script src="<?= base_url() ?>assets/js/apps/tisa_datatables.js"></script>
 <!--datepicker-->
 <script src="<?= base_url() ?>assets/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
+
 
   report = {
 
@@ -207,7 +211,8 @@
 
         }
     }
-    $('#datetimepicker1').datepicker();
+
+  $('#datetimepicker1').datepicker();
 </script>
 </body>
 
