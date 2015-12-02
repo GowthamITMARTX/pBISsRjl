@@ -151,4 +151,40 @@ class Report_model extends MY_Model{
             ->get()->row();
     }
 
+    function getFilterData(){
+
+        $this->db->from('students')
+            ->join('std_payment','students.id = std_payment.std_id ')
+            ->where('students.status',1)
+            ->select('students.* , std_payment.code , std_payment.amount , sum(class_pool.amount) as fee , course.title as course , batch.title as batch , class.title as class  ' )
+            ->group_by("students.id");
+
+        if($this->input->get('course') != 0  && $this->input->get('batch') != 0  ){
+            $this->db->join("class","class.c_id = {$this->input->get('course')} and class.b_id = {$this->input->get('batch')} and std_payment.cls_id = class.id  ");
+            $this->db->join("class_pool","class.id = class_pool.cls_id  ");
+        }else if($this->input->get('course') != 0 ){
+            $this->db->join("class","class.c_id = {$this->input->get('course')}  and std_payment.cls_id = class.id  ");
+            $this->db->join("class_pool","class.id = class_pool.cls_id  ");
+        }else if($this->input->get('batch') != 0  ){
+            $this->db->join("class","class.b_id = {$this->input->get('batch')} and std_payment.cls_id = class.id  ");
+            $this->db->join("class_pool","class.id = class_pool.cls_id  ");
+        }else{
+            $this->db->join("class_pool","std_payment.cls_id = class_pool.cls_id  ");
+            $this->db->join("class","class.id = class_pool.cls_id  ");
+        }
+        $this->db->join("course","course.id = class.c_id  ");
+        $this->db->join("batch","batch.id = class.b_id  ");
+
+
+        if($this->input->get('lecture') != 0  ){
+            $this->db->having('class_pool.lid',  $this->input->get('lecture') );
+            $this->db->group_by("class_pool.lid");
+        }
+        if($this->input->get('subject') != 0  ){
+            $this->db->having("class_pool.sid",$this->input->get('subject'));
+            $this->db->group_by("class_pool.sid");
+        }
+        return $this->db->get()->result();
+    }
+
 }
