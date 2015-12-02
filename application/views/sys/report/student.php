@@ -29,7 +29,7 @@
                                     <div class="form-group">
                                         <?= form_open(); ?>
                                         <div class="col-sm-4">
-                                            <input type="text" id="load Class" data-hide="#class_tag" class="form-control model-link " data-url="<?= base_url() ?>sys/student/getAll" data-type="table" data-for="form[std_id]" data-id="std_id" name="search">
+                                            <input type="text" id="load Class" data-hide="#class_tag" class="form-control model-link " data-url="<?= base_url() ?>sys/student/getAll" data-type="table" data-for="form[std_id]" data-id="std_id" name="search" placeholder="Enter Your Filter Text (Name/Index/NIC/Email)">
 
                                         </div>
                                         <div class="col-sm-4">
