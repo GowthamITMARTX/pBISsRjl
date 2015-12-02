@@ -51,7 +51,7 @@
                                 <h3 class="panel-title" style="text-align: center;"><b>Student Information</b></h3>
                             </div>
                             <div class="panel-body">
-                                <div class="col-sm-3 col-sm-3 " align="center"> <img alt="User Pic" src="<?=base_url('uploads/students/profile').'/'.$personal['profile_image']; ?>" class="img-circle img-responsive"></div>
+                                <div class="col-sm-3 col-sm-3 " align="center"> <img alt="User Pic" <?php if($personal['profile_image'] !="" && $personal['profile_image'] !=null) : ?>src="<?=base_url('uploads/students/profile').'/'.$personal['profile_image'];  ?>" <?php else: ?> src="http://www.psdgraphics.com/wp-content/uploads/2010/04/web-user.jpg" <?php endif; ?>class="img-circle img-responsive"></div>
                                 <div class=" col-sm-9 col-lg-9 ">
                                     <table class="table table-user-information">
                                         <tbody>
@@ -61,7 +61,7 @@
                                         </tr>
                                         <tr>
                                             <td> Student Name</td>
-                                            <td> <?=$personal->title.$personal['name']; ?></td>
+                                            <td> <?=$personal['title'].$personal['name']; ?></td>
                                         </tr>
                                         <tr>
                                             <td> Address</td>
