@@ -60,6 +60,7 @@ class Report extends MY_Controller
 
     function filterData(){
         $result = $this->report->getFilterData($this->input->get());
+//        echo $this->db->last_query();
         $this->load->view('sys/report/filter_ajax',array('result'=>$result));
     }
 

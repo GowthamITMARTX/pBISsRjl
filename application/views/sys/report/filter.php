@@ -73,6 +73,7 @@
                                             <div class="col-sm-4">
                                                 <label>YEAR</label>
                                                 <select class="form-control" id="year" name="year"   >
+                                                    <option value='0'>* Year</option>
                                                     <?php
                                                     foreach($years as $y){
                                                         if($y->year == date('Y')){
@@ -88,15 +89,15 @@
                                                 <label>MONTH </label>
                                                 <select class="form-control" id="month"  name="month"  >
                                                     <option value="0"  >*MONTH</option>
-                                                    <option value="1" <?= date('m') == 1 ? 'selected' :'' ?>   >January</option>
-                                                    <option value="2" <?= date('m') == 2 ? 'selected' :'' ?>    >February</option>
-                                                    <option value="3"  <?= date('m') == 3 ? 'selected' :'' ?>  >March</option>
-                                                    <option value="4" <?= date('m') == 4 ? 'selected' :'' ?>   >April</option>
-                                                    <option value="5" <?= date('m') == 5 ? 'selected' :'' ?>   >May</option>
-                                                    <option value="6" <?= date('m') == 6 ? 'selected' :'' ?>   >June</option>
-                                                    <option value="7" <?= date('m') == 7 ? 'selected' :'' ?>   >July</option>
-                                                    <option value="8"  <?= date('m') == 8 ? 'selected' :'' ?>  >August</option>
-                                                    <option value="9" <?= date('m') == 9 ? 'selected' :'' ?>   >September</option>
+                                                    <option value="01" <?= date('m') == 1 ? 'selected' :'' ?>   >January</option>
+                                                    <option value="02" <?= date('m') == 2 ? 'selected' :'' ?>    >February</option>
+                                                    <option value="03"  <?= date('m') == 3 ? 'selected' :'' ?>  >March</option>
+                                                    <option value="04" <?= date('m') == 4 ? 'selected' :'' ?>   >April</option>
+                                                    <option value="05" <?= date('m') == 5 ? 'selected' :'' ?>   >May</option>
+                                                    <option value="06" <?= date('m') == 6 ? 'selected' :'' ?>   >June</option>
+                                                    <option value="07" <?= date('m') == 7 ? 'selected' :'' ?>   >July</option>
+                                                    <option value="08"  <?= date('m') == 8 ? 'selected' :'' ?>  >August</option>
+                                                    <option value="09" <?= date('m') == 9 ? 'selected' :'' ?>   >September</option>
                                                     <option value="10" <?= date('m') == 10 ? 'selected' :'' ?>   >October</option>
                                                     <option value="11" <?= date('m') == 11 ? 'selected' :'' ?>    >November</option>
                                                     <option value="12" <?= date('m') == 12 ? 'selected' :'' ?>   >December</option>

@@ -167,6 +167,16 @@ class Report_model extends MY_Model{
             $this->db->having("class_pool.sid",$this->input->get('subject'));
             $this->db->group_by("class_pool.sid");
         }
+
+        if($this->input->get('month') != 0 && $this->input->get('year') != 0  ){
+            $this->db->where('DATE_FORMAT(std_payment.date, "%Y-%m") = ', "{$this->input->get('year') }-{$this->input->get('month') }");
+        }else if( $this->input->get('year') != 0  ){
+            $this->db->where('DATE_FORMAT(std_payment.date, "%Y") = ', "{$this->input->get('year') }");
+        }
+
+
+
+
         return $this->db->get()->result();
     }
 
