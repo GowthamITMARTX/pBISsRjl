@@ -119,7 +119,7 @@ class Lecture_model extends MY_Model
     function submitted_assignment($aid)
     {
         return $this->db->from('submitted_assignment')
-            ->select("submitted_assignment.*,students.index , concat(students.title,students.name) as name ",false)
+            ->select("submitted_assignment.*,students.index , concat(students.title,students.name) as std_name   ",false)
             ->join("students","students.id = submitted_assignment.std_id")
             ->where("assi_id",$aid)
             ->get()

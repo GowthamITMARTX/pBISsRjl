@@ -89,11 +89,10 @@
                         <table width="60%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td><input class="loginbut" type="submit" name="yt0" value="Login"/></td>
-                                <td><a href="<?=base_url(); ?>/index.php?r=user/recovery">Lost Password?</a>
+                                <td><a href="<?=base_url(); ?>">Admin OR User Login</a>
                                     <div class="student_reg">
-                                        <a href="<?=base_url(); ?>/index.php?r=onlineadmission/registration/index">Student
-                                            Registration</a> 
-                                     </div>
+                                        <a href="<?=base_url(); ?>lecture/login">Lecture Login </a>
+                                    </div>
                                 </td>
                             </tr>
                         </table>

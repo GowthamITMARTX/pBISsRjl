@@ -150,7 +150,7 @@ class Assignment extends CI_Controller
                 echo "<tr>";
                 echo "<td>".($k+1)."</td>";
                 echo "<td>$r->index</td>";
-                echo "<td>$r->name</td>";
+                echo "<td>$r->std_name</td>";
                 echo "<td> $r->date  $r->time </td>";
                 echo '<td><a href="' . base_url('lecture/assignment/download/') . '?f=' . $r->name . '&n=' . $r->index . '" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-file" >PDF</i> - Download</a></td>';
                 echo "<td> <input type='text' class='int form-control ' size='5' name='result[$r->std_id]' value='$r->mark'   > </td>";
@@ -166,7 +166,7 @@ class Assignment extends CI_Controller
         $file_name = $this->input->get('f');
         $name = $this->input->get('n');
         $this->load->helper('download');
-        $data = file_get_contents(realpath(APPPATH . '../uploads/' . $file_name));
+        $data = file_get_contents(realpath(APPPATH . '../uploads/students/' . $file_name));
         $name_n = $name . '.pdf';
         force_download($name_n, $data);
     }
