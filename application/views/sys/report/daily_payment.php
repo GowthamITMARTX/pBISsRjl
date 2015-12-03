@@ -127,6 +127,16 @@
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php endif; ?>
+                                 <?php if(!empty($exp->other)) : ?>
+                                     <?php foreach($exp->other as $other) : ?>
+                                         <tr>
+                                             <td><?=$j+1; ?></td>
+                                             <td><?="Other Expenses - ".$other->note; ?></td>
+                                             <td><?=number_format($other->amount); ?></td>
+                                             <?php $tot_exp += $other->amount; $j +=1; ?>
+                                         </tr>
+                                     <?php endforeach; ?>
+                                 <?php endif; ?>
                                                 </tbody>
                                              </table>
                                             </div>
