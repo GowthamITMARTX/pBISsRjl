@@ -94,9 +94,9 @@ class Report_model extends MY_Model{
     function getIncome($date){
         $income = new stdClass();
         $income->other =  $this->db->from('other_income')
-                       -> where('DATE_FORMAT(other_income.current_date, "%Y-%m-%d") = ', $date)
-                       ->where('other_income.status', 1)
-                       ->get()->result();
+            -> where('DATE_FORMAT(other_income.current_date, "%Y-%m-%d") = ', $date)
+            ->where('other_income.status', 1)
+            ->get()->result();
 
         $income->std = $this->db->select('students.index , students.title, students.name , class.title as cls , std_payment.amount')
             ->from('std_payment')
@@ -105,30 +105,27 @@ class Report_model extends MY_Model{
             -> where('DATE_FORMAT(std_payment.date, "%Y-%m-%d") = ', $date)
             ->where('std_payment.status', 1)
             ->get()->result();
-         return $income;
+        return $income;
     }
 
     function getExpenses($date){
         $exp = new stdClass();
-        $exp->emp = $this->db->select('expenses_type.title, expenses_employee.voucher, employee.index,employee.title, employee.name , expenses_employee.amount')
+        $exp->emp = $this->db->select('expenses_employee.voucher, employee.index,employee.title, employee.name , expenses_employee.amount')
             ->from('expenses_employee')
-            ->join('expenses_type', 'expenses_employee.code = expenses_type.code ', 'left')
             ->join('employee', 'expenses_employee.emp_id = employee.id', 'left')
             ->where('DATE_FORMAT(expenses_employee.current_date, "%Y-%m-%d") = ', $date)
             ->where('expenses_employee.status', 1)
             ->get()->result();
 
-        $exp->lec = $this->db->select('expenses_type.title, lecture.emp_id , lecture.title, lecture.name ,expenses_lecture.voucher, expenses_lecture.amount')
+        $exp->lec = $this->db->select('lecture.emp_id , lecture.title, lecture.name ,expenses_lecture.voucher, expenses_lecture.amount')
             ->from('expenses_lecture')
-            ->join('expenses_type', 'expenses_lecture.code = expenses_type.code ', 'left')
             ->join('lecture', 'expenses_lecture.lec_id = lecture.id', 'left' )
             ->where('DATE_FORMAT(expenses_lecture.current_date, "%Y-%m-%d") = ', $date)
             ->where('expenses_lecture.status', 1)
             ->get()->result();
 
-        $exp->other = $this->db->select('expenses_type.title, expenses_other.note, expenses_other.amount')
+         $exp->other = $this->db->select('expenses_other.note, expenses_other.amount')
             ->from('expenses_other')
-            ->join('expenses_type', 'expenses_other.code = expenses_type.code ', 'left')
             ->where('DATE_FORMAT(expenses_other.current_date, "%Y-%m-%d") = ', $date)
             ->where('expenses_other.status', 1)
             ->get()->result();
