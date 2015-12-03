@@ -19,7 +19,7 @@
         $(document).ready(function () {
             $(':password').showPassword({
                 linkRightOffset: 5,
-                linkTopOffset: 8,
+                linkTopOffset: 10,
                 linkText: '',
                 showPasswordLinkText: '',
             });

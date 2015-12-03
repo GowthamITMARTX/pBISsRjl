@@ -12,11 +12,11 @@ class Report extends MY_Controller
     function daily_payment(){
         if($date = $this->input->post('date')){
             sscanf($date, '%d/%d/%d', $m, $d, $y);
+            $m = strlen($m) == 1 ? "0$m" : $m ;
+            $d = strlen($d) == 1 ? "0$d" : $d ;
             $income = $this->report->getIncome("$y-$m-$d");
             $exp = $this->report->getExpenses("$y-$m-$d");
             $this->load->view('sys/report/daily_payment',array('result'=>$income , 'date' => $date, 'exp' => $exp ));
-
-
         }
         else{
             $this->load->view('sys/report/daily_payment' , array("result" => array() , 'date' => date('m/d/Y'), 'exp' => "" ) );
