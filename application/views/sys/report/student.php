@@ -102,6 +102,7 @@
                                     </tr>
                                     </thead>
                                 <tbody>
+                                <?php $tot=0; $paid =0; ?>
                                 <?php foreach($payment as $k=> $p) : ?>
                                     <tr>
                                         <td><?=$k+1; ?></td>
@@ -110,8 +111,17 @@
                                         <td><?=number_format($p->paid); ?></td>
                                         <td><?=number_format($p->tot - $p->paid); ?></td>
                                     </tr>
+                                    <?php $tot += $p->tot; $paid += $p->paid;?>
                                 <?php endforeach; ?>
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td><strong><?=number_format($tot); ?></strong></td>
+                                    <td><strong><?=number_format($paid); ?></strong></td>
+                                    <td><strong><?=number_format($tot-$paid); ?></strong></td>
+                                </tr>
+                                </tfoot>
                                 </table>
                             </div>
                         </div>
