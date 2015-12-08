@@ -29,20 +29,39 @@ class Course extends MY_Controller
 
         $this->form_validation->set_rules('form[code]', 'Course Code', 'required|is_unique[course.code]');
         $this->form_validation->set_rules('form[title]', 'Name', 'required');
+        $this->form_validation->set_rules('form[description]', 'Course Objectives', 'required');
 
         if ($this->form_validation->run() == TRUE){
-            if($this->model->create()){
-                $this->session->set_flashdata('valid', 'Record Inserted Successfully');
-            }else{
-                $this->session->set_flashdata('error', 'Record Insert Failure !!!');
-            }
-            redirect(current_url());
+                $d = $this->do_upload();
+                if($this->model->create($d['file_name'])){
+                    $this->session->set_flashdata('valid', 'Record Inserted Successfully');
+                }else{
+                    $this->session->set_flashdata('error', 'Record Insert Failure !!!');
+                }
+
+           redirect(current_url());
         }else{
             if($this->input->post())
                 $this->session->set_flashdata('error', validation_errors() );
         }
         $this->load->view('sys/course/course_create');
     }
+
+    public function do_upload()
+{
+    $config['upload_path'] = './uploads/courses';
+    $config['allowed_types'] = 'jpg|png|gif';
+
+    $this->load->library('upload', $config);
+
+    if (!$this->upload->do_upload()) {
+        return false;
+    } else {
+        return $this->upload->data();
+    }
+}
+
+
 
 
 

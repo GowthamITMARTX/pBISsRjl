@@ -62,6 +62,19 @@
                                         class="side_icon ion-android-add"></span> Create Class </a></li>
 
                         </ul>
+
+                        <h4 class="panel_heading panel_heading_first">Jobs</h4>
+                        <ul>
+                            <li>
+                                <a href="<?= base_url() ?>sys/jobs">
+                                    <span class="side_icon ion-ios7-folder-outline"></span>
+                                    <span class="badge badge-primary"></span> Job Portal Summary
+                                </a>
+                            </li>
+                            <li><a href="<?= base_url() ?>sys/jobs/create"><span
+                                        class="side_icon ion-android-add"></span> Create Job Portal </a></li>
+
+                        </ul>
                     </div>
                 </div>
             </li>

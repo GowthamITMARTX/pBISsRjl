@@ -10,8 +10,9 @@ class Course_Model extends MY_Model{
 
     var $table = "course";
 
-    function create(){
+    function create($file_name){
         $d = $this->input->post('form');
+        $d['image'] = $file_name;
         $d['create_by'] = $this->session->userdata('id');
         $d['create_date'] = date('d-m-Y') ;
 

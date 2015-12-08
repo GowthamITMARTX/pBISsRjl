@@ -43,7 +43,7 @@
 
                             ?>
 
-                            <form data-parsley-validate method="post">
+                            <form data-parsley-validate method="post" enctype="multipart/form-data">
 
                                 <div class="row">
 
@@ -58,6 +58,15 @@
                                             <label for="reg_course_name">Course Name</label>
                                             <input type="text" id="reg_course_name" name="form[title]"
                                                    class="form-control" data-parsley-required="true">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reg_course_name">Upload Image</label>
+                                            <input type="file" id="reg_course_name" name="userfile"
+                                                   class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reg_course_name">Course Objectives</label>
+                                            <textarea name="form[description]" id="msg_content" cols="30" rows="12" class="form-control"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -85,8 +94,36 @@
 <?php $this->load->view('inc/foot') ?>
 <!-- parsley.js validation -->
 <script src="<?= base_url() ?>assets/lib/Parsley.js/dist/parsley.min.js"></script>
+<!-- wysiwg editor -->
+<script src="<?= base_url() ?>assets/lib/ckeditor/ckeditor.js"></script>
 <!-- form validation functions -->
 <script src="<?= base_url() ?>assets/js/apps/tisa_validation.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        if ($('#msg_content').length) {
+            CKEDITOR.replace( 'msg_content', {
+                toolbarGroups: [
+                    { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+                    { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
+                    { name: 'forms' },
+                    { name: 'links' },
+                    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+                    '/',
+                    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+                    { name: 'styles' },
+                    { name: 'insert' },
+                    { name: 'colors' },
+                    { name: 'tools' },
+                    { name: 'others' },
+                ]
+            });
+
+            CKEDITOR.config.autoParagraph = false;
+        }
+    });
+</script>
+
 </body>
 
 </html>
